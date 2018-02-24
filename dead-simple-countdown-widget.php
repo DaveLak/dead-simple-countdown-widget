@@ -7,7 +7,7 @@ Plugin Name: Dead Simple Countdown Widget
 Plugin URI: #
 Description: A dead simple plugin that adds a countdown timer widget
 Author: David Lakin
-Version: 1.0.0
+Version: 1.0.1
 Author URI: #
 License: GPLv2 or later
 Text Domain: dead_simple_countdown
