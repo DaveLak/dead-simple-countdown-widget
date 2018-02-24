@@ -31,7 +31,7 @@ define( 'DSCW_COUNTDOWN_TIMER_PATH', plugin_dir_path( __FILE__ ) );
 function dscw_countdown_register_widget() {
 	require_once DSCW_COUNTDOWN_TIMER_PATH . 'inc/countdown-widget.php';
 
-	register_widget( 'WP_Widget_CountDown_Timmer' );
+	register_widget( 'Dead_Simple_CountDown_Widget' );
 }
 
 add_action( 'widgets_init', 'dscw_countdown_register_widget' );
