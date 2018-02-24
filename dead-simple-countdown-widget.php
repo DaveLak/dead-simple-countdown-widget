@@ -7,7 +7,7 @@ Plugin Name: Dead Simple Countdown Widget
 Plugin URI: #
 Description: A dead simple plugin that adds a countdown timer widget
 Author: David Lakin
-Version: 1.0.0
+Version: 1.0.1
 Author URI: #
 License: GPLv2 or later
 Text Domain: dead_simple_countdown
@@ -31,7 +31,7 @@ define( 'DSCW_COUNTDOWN_TIMER_PATH', plugin_dir_path( __FILE__ ) );
 function dscw_countdown_register_widget() {
 	require_once DSCW_COUNTDOWN_TIMER_PATH . 'inc/countdown-widget.php';
 
-	register_widget( 'WP_Widget_CountDown_Timmer' );
+	register_widget( 'Dead_Simple_CountDown_Widget' );
 }
 
 add_action( 'widgets_init', 'dscw_countdown_register_widget' );
