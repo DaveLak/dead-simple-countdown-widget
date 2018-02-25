@@ -110,7 +110,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$content = '';
 			$content .= '<div 
-		                class="tmd-countdown-instance" 
+		                class="dscw-countdown-instance" 
 		                data-instance="' . $this->id . '" 
 		                data-end-date="' . $endDate . '" 
 		                data-expired-text="' . $expiredText . '"
