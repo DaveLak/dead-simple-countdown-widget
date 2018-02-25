@@ -47,31 +47,31 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
             <hr>
             <p>
                 <label for="<?php echo $this->get_field_id( 'end_date' ); ?>">
+                    End Date:
                     <input type="text" id="<?php echo $this->get_field_id( 'end_date' ); ?>"
                            name="<?php echo $this->get_field_name( 'end_date' ); ?>"
                            value="<?php echo $end_date ?>"
                            onclick="jQuery(this).datepicker();jQuery(this).datepicker('show');"
                     />
-
+                    <span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;" >
+                        Date to count down to.
+                    </span>
                 </label>
             </p>
             <hr>
             <p>
                 <label for="<?php echo $this->get_field_id( 'expired_text' ); ?>">
+                    End Date Text:
                     <input type="text" id="<?php echo $this->get_field_id( 'expired_text' ); ?>"
                            name="<?php echo $this->get_field_name( 'expired_text' ); ?>"
                            value="<?php echo $expired_text ?>"
                     />
-
+                    <span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;" >
+                        Text displayed when countdown expires.
+                    </span>
                 </label>
             </p>
 
-            <div class="tmd-countdown-timer-box">
-                <p class="tmd-countdown-items tmd-countdown-days"> Days</p>
-                <p class="tmd-countdown-items tmd-countdown-hours"> Hours</p>
-                <p class="tmd-countdown-items tmd-countdown-minutes"> Minutes</p>
-                <p class="tmd-countdown-items tmd-countdown-seconds"> Seconds</p>
-            </div>
 			<?php
 			echo ob_get_clean();
 		}
