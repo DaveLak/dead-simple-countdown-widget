@@ -27,7 +27,7 @@
         this.drawTimer = function () {
             this.$countDownBox = $('<div/>', {
                 id: 'countdown-' + this.instanceID,
-                class: 'dscw-countdown-widget'
+                class: 'dscw-countdown-timer-box-wrapper'
             }).appendTo(this.$mountPoint);
         };
 
@@ -58,10 +58,10 @@
             // Output the timer
             this.$countDownBox.html('' +
                 '<div class="dscw-countdown-timer-box">' +
-                '    <p class="dscw-countdown-items dscw-countdown-days">' + days + ' Days</p>' +
-                '    <p class="dscw-countdown-items dscw-countdown-hours">' + hours + ' Hours</p>' +
-                '    <p class="dscw-countdown-items dscw-countdown-minutes">' + minutes + ' Minutes</p>' +
-                '    <p class="dscw-countdown-items dscw-countdown-seconds">'+ seconds + ' Seconds</p>' +
+                '    <p class="dscw-countdown-timer-box-items dscw-countdown-days">' + days + ' Days</p>' +
+                '    <p class="dscw-countdown-timer-box-items dscw-countdown-hours">' + hours + ' Hours</p>' +
+                '    <p class="dscw-countdown-timer-box-items dscw-countdown-minutes">' + minutes + ' Minutes</p>' +
+                '    <p class="dscw-countdown-timer-box-items dscw-countdown-seconds">' + seconds + ' Seconds</p>' +
                 '</div>'
             );
         };

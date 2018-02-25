@@ -1,13 +1,13 @@
-.dscw-countdown-widget {
-    box-shadow: -6px 7px 4px 0px rgba(0,0,0,0.18);
+.dscw-countdown-timer-box-wrapper {
     border-radius: 3px;
 }
+
 .dscw-countdown-timer-box {
     text-align: center;
     font-weight: bold;
 }
 
-.dscw-countdown-items {
+.dscw-countdown-timer-box-items {
     display: inline-block;
     margin: 5px;
 }
