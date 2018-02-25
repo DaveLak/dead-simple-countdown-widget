@@ -7,7 +7,7 @@ Plugin Name: Dead Simple Countdown Widget
 Plugin URI: #
 Description: A dead simple plugin that adds a countdown timer widget
 Author: David Lakin
-Version: 1.0.1
+Version: 1.0.2
 Author URI: #
 License: GPLv2 or later
 Text Domain: dead_simple_countdown
@@ -42,18 +42,18 @@ add_action( 'widgets_init', 'dscw_countdown_register_widget' );
 function dscw_countdown_register_assets() {
 	// Front end JS
 	wp_register_script(
-		'dscw-countdown-timer-js',
+		'dead-simple-countdown-widget-js',
 		DSCW_COUNTDOWN_TIMER_URL . 'assets/front-end/js/countdown-timer.js',
 		array( 'jquery' ),
-		'1.0.0',
+		'1.0.2',
 		true
 	);
 	// Front end styles
 	wp_register_style(
-		'dscw-countdown-timer-styles',
+		'dead-simple-countdown-widget-styles',
 		DSCW_COUNTDOWN_TIMER_URL . 'assets/front-end/css/countdown-timer.css',
 		array(),
-		'1.0.0'
+		'1.0.2'
 	);
 
 }
