@@ -33,6 +33,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
+			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
 
 			ob_start();
@@ -51,12 +52,21 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
                     <input type="text" id="<?php echo $this->get_field_id( 'end_date' ); ?>"
                            name="<?php echo $this->get_field_name( 'end_date' ); ?>"
                            value="<?php echo $end_date ?>"
-                           onclick="jQuery(this).datepicker();jQuery(this).datepicker('show');"
+                           onclick="jQuery(this).datepicker({
+                                        altField: '#<?php echo $this->get_field_id( 'end_date_ms' ); ?>',
+                                        altFormat: '@'
+                                    });
+                                   jQuery(this).datepicker('show');
+                                   "
                     />
                     <span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;" >
                         Date to count down to.
                     </span>
                 </label>
+                <input type="hidden" id="<?php echo $this->get_field_id( 'end_date_ms' ); ?>"
+                       name="<?php echo $this->get_field_name( 'end_date_ms' ); ?>"
+                       value="<?php echo $end_date_ms ?>"
+                />
             </p>
             <hr>
             <p>
@@ -91,6 +101,8 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$instance['end_date'] = sanitize_text_field( $new_instance['end_date'] );
 
+			$instance['end_date_ms'] = sanitize_text_field( $new_instance['end_date_ms'] );
+
 			$instance['expired_text'] = sanitize_text_field( $new_instance['expired_text'] );
 
 
@@ -105,14 +117,15 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_script( 'dead-simple-countdown-widget-js' );
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
-			$endDate     = $instance['end_date'];
-			$expiredText = $instance['expired_text'];
+			$endDate        = $instance['end_date'];
+			$endDate_ms     = $instance['end_date_ms'];
+			$expiredText    = $instance['expired_text'];
 
 			$content = '';
 			$content .= '<div 
 		                class="dscw-countdown-instance" 
 		                data-instance="' . $this->id . '" 
-		                data-end-date="' . $endDate . '" 
+		                data-end-date="' . $endDate_ms . '" 
 		                data-expired-text="' . $expiredText . '"
 		             >';
 			$content .= '<h3>' . $instance['title_text'] . '</h3>';
