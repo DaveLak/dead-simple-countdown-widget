@@ -4,6 +4,7 @@
 
     /* CountDownTimer class  */
     var CountDownTimer = function (settings) {
+        console.log(settings);
 
         // jQuery reference to the DOM Node we add this timer to
         this.$mountPoint = settings.$mountPoint;
@@ -14,8 +15,8 @@
         // Text displayed when countdown finishes
         this.expiredText = settings.expiredText;
 
-        // UNIX timestamp of the date the countdown is set to expire
-        this.end = Date.parse(settings.endDate);
+        // UNIX timestamp in milliseconds of the date the countdown is set to expire
+        this.end = settings.endDate;
 
         // Internal time bases
         this._second = 1000;
