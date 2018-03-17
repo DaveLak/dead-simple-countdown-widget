@@ -32,6 +32,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		public function form( $instance ) {
 
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
+			$theme        = ! empty( $instance['theme'] ) ? $instance['theme'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
@@ -44,6 +45,18 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
                        name="<?php echo $this->get_field_name( 'title_text' ); ?>" class="widefat"
                        value="<?php echo esc_attr( $title_text ); ?>"
                 />
+            </p>
+            <hr>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'theme' ); ?>">Theme:</label>
+                <select name="<?php echo $this->get_field_name( 'theme' ); ?>"
+                        id="<?php echo $this->get_field_id( 'theme' ); ?>">
+                    <option value="light" <?php echo $theme === 'light' || ( $theme !== 'light' && $theme !== 'dark' ) ? 'selected' : ''; ?>>Light</option>
+                    <option value="dark" <?php echo $theme === 'dark' ? 'selected' : ''; ?>>Dark</option>
+                    <option value="none"<?php echo $theme === 'none' ? 'selected' : ''; ?>>
+                        None
+                    </option>
+                </select>
             </p>
             <hr>
             <p>
@@ -76,7 +89,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
                            name="<?php echo $this->get_field_name( 'expired_text' ); ?>"
                            value="<?php echo $expired_text ?>"
                     />
-                    <span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;" >
+                    <span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
                         Text displayed when countdown expires.
                     </span>
                 </label>
@@ -99,6 +112,8 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$instance['title_text'] = sanitize_text_field( $new_instance['title_text'] );
 
+			$instance['theme'] = sanitize_text_field( $new_instance['theme'] );
+
 			$instance['end_date'] = sanitize_text_field( $new_instance['end_date'] );
 
 			$instance['end_date_ms'] = sanitize_text_field( $new_instance['end_date_ms'] );
@@ -117,19 +132,32 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_script( 'dead-simple-countdown-widget-js' );
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
-			$endDate        = $instance['end_date'];
-			$endDate_ms     = $instance['end_date_ms'];
-			$expiredText    = $instance['expired_text'];
+			$endDate_ms  = $instance['end_date_ms'];
+			$expiredText = $instance['expired_text'];
+
+			switch ( $instance['theme'] ) {
+				case 'light':
+					$themeClass = 'dscw-countdown-theme-light';
+					break;
+				case 'dark':
+					$themeClass = 'dscw-countdown-theme-dark';
+					break;
+				default:
+					$themeClass = '';
+					break;
+			}
 
 			$content = '';
 			$content .= '<div 
-		                class="dscw-countdown-instance" 
+		                class="dscw-countdown-instance ' . $themeClass . '" 
 		                data-instance="' . $this->id . '" 
 		                data-end-date="' . $endDate_ms . '" 
 		                data-expired-text="' . $expiredText . '"
 		             >';
+			$content .= '<div class="dscw-countdown-theme-inner">';
 			$content .= '<h3>' . $instance['title_text'] . '</h3>';
 			$content .= '<div id="timer-mount-' . $this->id . '"></div>';
+			$content .= '</div>';
 			$content .= '</div>';
 
 			$output = $args['before_widget'] . $content . $args['after_widget'];

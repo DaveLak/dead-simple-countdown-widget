@@ -1,13 +1,38 @@
+.dscw-countdown-instance {
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+}
+
 .dscw-countdown-timer-box-wrapper {
     border-radius: 3px;
 }
 
 .dscw-countdown-timer-box {
-    text-align: center;
     font-weight: bold;
 }
 
 .dscw-countdown-timer-box-items {
     display: inline-block;
     margin: 5px;
+}
+
+/* Themes */
+.dscw-countdown-theme-inner {
+    padding: 0 5px;
+}
+
+/* Light Theme */
+.dscw-countdown-theme-light {
+    background-color: #fafafa;
+    color: #086788;
+}
+
+.dscw-countdown-theme-light .dscw-countdown-theme-inner {
+border-radius: 5px;
+border: solid 3px #06aed5;
+}
+
+.dscw-countdown-theme-light .dscw-countdown-expired-text {
+    color: #dd1c1a;
 }
