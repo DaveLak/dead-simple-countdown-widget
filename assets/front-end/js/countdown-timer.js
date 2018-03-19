@@ -76,35 +76,38 @@
             // Time left until countdown expires
             var timeRemaining = this.end - now;
 
-            if (timeRemaining < 0) {
-                // Countdown expired
-                clearInterval(this.timer);
-                // stop running this method and set text
-                this.$countDownBox.html('<h4>' + this.expiredText + '</h4>');
-                // Finished
-                return;
+            // Check if there is still time left before the countdown expires
+            if (timeRemaining > 0) {
+                // There is still time left
 
-            } else {
-                // Calculate time left in countdown
+                // Calculate time left until expiration
                 var days = Math.floor(timeRemaining / this._day);
                 var hours = Math.floor((timeRemaining % this._day) / this._hour);
                 var minutes = Math.floor((timeRemaining % this._hour) / this._minute);
                 var seconds = Math.floor((timeRemaining % this._minute) / this._second);
-            }
 
-            // Update the displayed numbers
-            this.$numberDays.text(days);
-            this.$numberHours.text(hours);
-            this.$numberMinutes.text(minutes);
-            this.$numberSeconds.text(seconds);
+                // Update the displayed numbers
+                this.$numberDays.text(days);
+                this.$numberHours.text(hours);
+                this.$numberMinutes.text(minutes);
+                this.$numberSeconds.text(seconds);
+
+            } else {
+                // The countdown expired. Stop future execution of this countdown.
+                clearInterval(this.timer);
+                // Set the expiration text and exit
+                this.$countDownBox.html('<h4>' + this.expiredText + '</h4>');
+                // Finished
+            }
         };
 
-        // Draw container and mount it to this.$mountPoint
+        // Draw the timer
         this.drawTimer();
 
         // Reference to calling class
         var self = this;
         this.timer = setInterval(function () {
+            // Run the actual countdown until it expires
             self.showRemainingTime();
         }, 1000);
 
