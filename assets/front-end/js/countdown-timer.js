@@ -37,7 +37,7 @@
             // Create and mount the container
             this.$countDownBox = $('<div/>', {
                 id: timerID,
-                class: 'dscw-countdown-timer-box-wrapper'
+                class: 'dscw-countdown-timer-box-container'
             }).appendTo(this.$mountPoint);
 
             this.$countDownBox.html('' +
