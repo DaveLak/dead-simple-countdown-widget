@@ -74,9 +74,9 @@
             // Time right now
             var now = new Date();
             // Time left until countdown expires
-            var distance = this.end - now;
+            var timeRemaining = this.end - now;
 
-            if (distance < 0) {
+            if (timeRemaining < 0) {
                 // Countdown expired
                 clearInterval(this.timer);
                 // stop running this method and set text
@@ -86,10 +86,10 @@
 
             } else {
                 // Calculate time left in countdown
-                var days = Math.floor(distance / this._day);
-                var hours = Math.floor((distance % this._day) / this._hour);
-                var minutes = Math.floor((distance % this._hour) / this._minute);
-                var seconds = Math.floor((distance % this._minute) / this._second);
+                var days = Math.floor(timeRemaining / this._day);
+                var hours = Math.floor((timeRemaining % this._day) / this._hour);
+                var minutes = Math.floor((timeRemaining % this._hour) / this._minute);
+                var seconds = Math.floor((timeRemaining % this._minute) / this._second);
             }
 
             // Update the displayed numbers
