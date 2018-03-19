@@ -96,7 +96,7 @@
                 // The countdown expired. Stop future execution of this countdown.
                 clearInterval(this.timer);
                 // Set the expiration text and exit
-                this.$countDownBox.html('<h4>' + this.expiredText + '</h4>');
+                this.$countDownBox.html('<h4 class="dscw-countdown-expired-text">' + this.expiredText + '</h4>');
                 // Finished
             }
         };
