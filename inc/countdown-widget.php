@@ -50,15 +50,15 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			ob_start();
 			?>
-			<p>
+			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>">Title:</label>
 				<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>"
 					   name="<?php echo esc_attr( $this->get_field_name( 'title_text' ) ); ?>" class="widefat"
 					   value="<?php echo esc_attr( $title_text ); ?>"
 				/>
-			</p>
+			</div>
 			<hr>
-			<p>
+			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>">Theme:</label>
 				<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"
 						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>">
@@ -66,9 +66,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
 					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
 				</select>
-			</p>
+			</div>
 			<hr>
-			<p>
+			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'end_date' ) ); ?>">
 					End Date:
 					<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'end_date' ) ); ?>"
@@ -89,9 +89,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 					   name="<?php echo esc_attr( $this->get_field_name( 'end_date_ms' ) ); ?>"
 					   value="<?php echo esc_attr( $end_date_ms ); ?>"
 				/>
-			</p>
+			</div>
 			<hr>
-			<p>
+			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'expired_text' ) ); ?>">
 					End Date Text:
 					<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'expired_text' ) ); ?>"
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						Text displayed when countdown expires.
 					</span>
 				</label>
-			</p>
+			</div>
 
 			<?php
 			echo ob_get_clean();
