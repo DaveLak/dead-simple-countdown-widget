@@ -10,6 +10,8 @@
  * Text Domain: dead_simple_countdown
  *
  * @package   Dead_Simple_Countdown_Widget
+ * @since 1.0.0
+ *
  * @author    David Lakin <info@themoderndev.com>
  * @license   GPLv2 or later
  * @link      https://github.com/DaveLak/dead-simple-countdown-widget

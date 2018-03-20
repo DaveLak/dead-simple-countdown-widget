@@ -1,14 +1,22 @@
 <?php
+/**
+ * Dead_Simple_CountDown_Widget class
+ *
+ * Class that extends WP_Widget and implements the countdown timer widget.
+ *
+ * @package Dead_Simple_Countdown_Widget
+ * @since 1.0.0
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
-
-/**
- * Class Dead_Simple_CountDown_Widget
- */
 if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
+	/**
+	 * Class Dead_Simple_CountDown_Widget
+	 */
 	class Dead_Simple_CountDown_Widget extends WP_Widget {
 
 
