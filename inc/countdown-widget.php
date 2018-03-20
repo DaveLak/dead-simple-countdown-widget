@@ -176,22 +176,30 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$content = '';
 			// Primary container element. This will carry our options to the front-end via data attributes.
 			$content .= '<div 
-		                class="dscw-countdown-instance ' . $theme_class . '" 
-		                data-instance="' . $this->id . '" 
-		                data-end-date="' . $end_date_ms . '" 
-		                data-expired-text="' . $expired_text . '"
+		                class="dscw-countdown-instance ' . esc_attr( $theme_class ) . '" 
+		                data-instance="' . esc_attr( $this->id ) . '" 
+		                data-end-date="' . esc_attr( $end_date_ms ) . '" 
+		                data-expired-text="' . esc_attr( $expired_text ) . '"
 		             >';
-			// Inner theme wrapper. This gives us another selector to style with.
-			$content .= '<div class="' . $inner_theme_class . '">';
-			$content .= '<h3>' . $instance['title_text'] . '</h3>';
+
+			// Inner theme wrapper. This class is empty when $theme_class is empty.
+			$content .= '<div class="' . esc_attr( $inner_theme_class ) . '">';
+
+			// Only add title if it's set.
+			if ( $instance['title_text'] ) {
+				$content .= '<h3>' . sanitize_text_field( $instance['title_text'] ) . '</h3>';
+			}
+
 			// Mount point to build the countdown in.
-			$content .= '<div id="timer-mount-' . $this->id . '"></div>';
+			$content .= '<div id="timer-mount-' . esc_attr( $this->id ) . '"></div>';
+
 			$content .= '</div>'; // Close inner theme wrapper.
 			$content .= '</div>'; // Close primary container.
 
 			$output = $args['before_widget'] . $content . $args['after_widget'];
-			echo $output;
 
+			// Echo out rendered HTML.
+			echo $output;
 		}
 	}
 }
