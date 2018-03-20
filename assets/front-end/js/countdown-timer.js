@@ -37,7 +37,7 @@
             // Create and mount the container
             this.$countDownBox = $('<div/>', {
                 id: timerID,
-                class: 'dscw-countdown-timer-box-wrapper'
+                class: 'dscw-countdown-timer-box-container'
             }).appendTo(this.$mountPoint);
 
             this.$countDownBox.html('' +
@@ -96,7 +96,7 @@
                 // The countdown expired. Stop future execution of this countdown.
                 clearInterval(this.timer);
                 // Set the expiration text and exit
-                this.$countDownBox.html('<h4>' + this.expiredText + '</h4>');
+                this.$countDownBox.html('<h4 class="dscw-countdown-expired-text">' + this.expiredText + '</h4>');
                 // Finished
             }
         };
