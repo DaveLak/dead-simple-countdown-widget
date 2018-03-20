@@ -32,10 +32,12 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		public function form( $instance ) {
 
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
-			$theme        = ! empty( $instance['theme'] ) ? $instance['theme'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
+
+			// If no theme is set default to "light"
+			$theme        = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
 
 			ob_start();
 			?>
@@ -51,7 +53,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
                 <label for="<?php echo $this->get_field_id( 'theme' ); ?>">Theme:</label>
                 <select name="<?php echo $this->get_field_name( 'theme' ); ?>"
                         id="<?php echo $this->get_field_id( 'theme' ); ?>">
-                    <option value="light" <?php echo $theme === 'light' || ( $theme !== 'light' && $theme !== 'dark' ) ? 'selected' : ''; ?>>Light</option>
+                    <option value="light" <?php echo $theme === 'light' ? 'selected' : ''; ?>>Light</option>
                     <option value="dark" <?php echo $theme === 'dark' ? 'selected' : ''; ?>>Dark</option>
                     <option value="none"<?php echo $theme === 'none' ? 'selected' : ''; ?>>
                         None
@@ -132,7 +134,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_script( 'dead-simple-countdown-widget-js' );
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
+			// UNIX timestamp in milliseconds of the date the countdown is set to expire
 			$endDate_ms  = $instance['end_date_ms'];
+			// Text to display when countdown expires
 			$expiredText = $instance['expired_text'];
 
 			// Check if we are using a theme and set the CSS class accordingly
@@ -152,8 +156,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$innerThemeClass = $themeClass ? 'dscw-countdown-theme-inner' : '';
 
 			$content = '';
-			// Primary container element.
-            // This will carry our options to the front-end via data attributes
+			// Primary container element. This will carry our options to the front-end via data attributes
 			$content .= '<div 
 		                class="dscw-countdown-instance ' . $themeClass . '" 
 		                data-instance="' . $this->id . '" 
