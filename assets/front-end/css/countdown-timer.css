@@ -4,18 +4,22 @@
     border-radius: 2px;
 }
 
+.dscw-countdown-instance h3 {
+    margin: 0;
+}
+
 .dscw-countdown-timer-box-container {
     border-radius: 3px;
 }
 
 .dscw-countdown-timer-box {
     font-weight: bold;
-    margin-bottom: 15px;
+    margin: 15px auto;
 }
 
 .dscw-countdown-timer-box .dscw-countdown-timer-box-items {
     display: inline-block;
-    margin: 5px 5px 0 5px;
+    margin: 5px;
     padding-bottom: 0;
 }
 
@@ -35,6 +39,13 @@
     border: solid 3px #06aed5;
 }
 
+.dscw-countdown-theme-light .dscw-countdown-timer-box {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color:  #06aed5;
+    padding: 4px 0;
+}
+
 .dscw-countdown-theme-light .dscw-countdown-expired-text {
     color: #dd1c1a;
 }
@@ -47,6 +58,13 @@
 .dscw-countdown-theme-dark .dscw-countdown-theme-inner {
     background-color: #0c0c0c;
     border: solid 3px #fafafa;
+}
+
+.dscw-countdown-theme-dark .dscw-countdown-timer-box {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #fafafa;
+    padding: 4px 0;
 }
 
 .dscw-countdown-theme-dark .dscw-countdown-expired-text {
