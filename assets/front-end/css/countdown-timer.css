@@ -10,11 +10,13 @@
 
 .dscw-countdown-timer-box {
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
-.dscw-countdown-timer-box-items {
+.dscw-countdown-timer-box .dscw-countdown-timer-box-items {
     display: inline-block;
-    margin: 5px;
+    margin: 5px 5px 0 5px;
+    padding-bottom: 0;
 }
 
 /* ============ Themes ============ */
