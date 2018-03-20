@@ -25,7 +25,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 
 		/**
-		 * Settings form.
+		 * Settings form for use in wp-admin.
 		 *
 		 * @param array $instance Current instance of the widget.
 		 */
@@ -124,6 +124,8 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		}
 
 		/**
+         * Renders widget output.
+         *
 		 * @param array $args An array of default widget arguments.
 		 * @param array $instance The current widget instance's settings.
 		 */
