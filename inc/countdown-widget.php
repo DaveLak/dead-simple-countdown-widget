@@ -53,9 +53,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 				<label for="<?php echo $this->get_field_id( 'theme' ); ?>">Theme:</label>
 				<select name="<?php echo $this->get_field_name( 'theme' ); ?>"
 						id="<?php echo $this->get_field_id( 'theme' ); ?>">
-					<option value="light" <?php echo $theme === 'light' ? 'selected' : ''; ?>>Light</option>
-					<option value="dark" <?php echo $theme === 'dark' ? 'selected' : ''; ?>>Dark</option>
-					<option value="none"<?php echo $theme === 'none' ? 'selected' : ''; ?>>
+					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
+					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
+					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>
 						None
 					</option>
 				</select>
