@@ -31,28 +31,47 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		 */
 		public function form( $instance ) {
 
+			/* Saved values */
+
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
-
 			// If no theme is set default to "light".
 			$theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
+
+			/*Field Attributes */
+
+			// Title text.
+			$title_field_id   = esc_attr( $this->get_field_id( 'title_text' ) );
+			$title_field_name = esc_attr( $this->get_field_name( 'title_text' ) );
+			// Theme.
+			$theme_field_id   = esc_attr( $this->get_field_id( 'theme' ) );
+			$theme_field_name = esc_attr( $this->get_field_name( 'theme' ) );
+			// End Date.
+			$end_date_field_id   = esc_attr( $this->get_field_id( 'end_date' ) );
+			$end_date_field_name = esc_attr( $this->get_field_name( 'end_date' ) );
+			// End Date Milliseconds.
+			$end_date_ms_field_id   = esc_attr( $this->get_field_id( 'end_date_ms' ) );
+			$end_date_ms_field_name = esc_attr( $this->get_field_name( 'end_date_ms' ) );
+			// End Date.
+			$expired_text_field_id   = esc_attr( $this->get_field_id( 'expired_text' ) );
+			$expired_text_field_name = esc_attr( $this->get_field_name( 'expired_text' ) );
 
 			ob_start();
 			?>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'title_text' ); ?>">Title:</label>
-				<input type="text" id="<?php echo $this->get_field_id( 'title_text' ); ?>"
-					   name="<?php echo $this->get_field_name( 'title_text' ); ?>" class="widefat"
+				<label for="<?php echo $title_field_id; ?>">Title:</label>
+				<input type="text" id="<?php echo $title_field_id; ?>"
+					   name="<?php echo $title_field_name; ?>" class="widefat"
 					   value="<?php echo esc_attr( $title_text ); ?>"
 				/>
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'theme' ); ?>">Theme:</label>
-				<select name="<?php echo $this->get_field_name( 'theme' ); ?>"
-						id="<?php echo $this->get_field_id( 'theme' ); ?>">
+				<label for="<?php echo $theme_field_id; ?>">Theme:</label>
+				<select name="<?php echo $theme_field_name; ?>"
+						id="<?php echo $theme_field_id; ?>">
 					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
 					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
 					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
@@ -60,34 +79,34 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'end_date' ); ?>">
+				<label for="<?php echo $end_date_field_id; ?>">
 					End Date:
-					<input type="text" id="<?php echo $this->get_field_id( 'end_date' ); ?>"
-						   name="<?php echo $this->get_field_name( 'end_date' ); ?>"
-						   value="<?php echo $end_date; ?>"
+					<input type="text" id="<?php echo $end_date_field_id; ?>"
+						   name="<?php echo $end_date_field_name; ?>"
+						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
-										altField: '#<?php echo $this->get_field_id( 'end_date_ms' ); ?>',
-										altFormat: '@'
-									});
+								   altField: '#<?php echo $end_date_ms_field_id; ?>',
+								   altFormat: '@'
+								   });
 								   jQuery(this).datepicker('show');
 								   "
 					/>
-					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;" >
+					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
 						Date to count down to.
 					</span>
 				</label>
-				<input type="hidden" id="<?php echo $this->get_field_id( 'end_date_ms' ); ?>"
-					   name="<?php echo $this->get_field_name( 'end_date_ms' ); ?>"
-					   value="<?php echo $end_date_ms; ?>"
+				<input type="hidden" id="<?php echo $end_date_ms_field_id; ?>"
+					   name="<?php echo $end_date_ms_field_name; ?>"
+					   value="<?php echo esc_attr( $end_date_ms ); ?>"
 				/>
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $this->get_field_id( 'expired_text' ); ?>">
+				<label for="<?php echo $expired_text_field_id; ?>">
 					End Date Text:
-					<input type="text" id="<?php echo $this->get_field_id( 'expired_text' ); ?>"
-						   name="<?php echo $this->get_field_name( 'expired_text' ); ?>"
-						   value="<?php echo $expired_text; ?>"
+					<input type="text" id="<?php echo $expired_text_field_id; ?>"
+						   name="<?php echo $expired_text_field_name; ?>"
+						   value="<?php echo esc_attr( $expired_text ); ?>"
 					/>
 					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
 						Text displayed when countdown expires.
@@ -124,8 +143,8 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		}
 
 		/**
-         * Renders widget output.
-         *
+		 * Renders widget output.
+		 *
 		 * @param array $args An array of default widget arguments.
 		 * @param array $instance The current widget instance's settings.
 		 */
