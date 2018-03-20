@@ -68,7 +68,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
 								   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
-								   altFormat: '@'
+								   altFormat: '@' // Unix timestamp (ms since 01/01/1970).
 								   });
 								   jQuery(this).datepicker('show');
 								   "
@@ -117,9 +117,10 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$instance['end_date'] = sanitize_text_field( $new_instance['end_date'] );
 
-			$instance['end_date_ms'] = sanitize_text_field( $new_instance['end_date_ms'] );
-
 			$instance['expired_text'] = sanitize_text_field( $new_instance['expired_text'] );
+
+			// If $new_instance['end_date_ms'] is a valid integer, save it, else set value to empty string.
+			$instance['end_date_ms'] = ( (int) $new_instance['end_date_ms'] ) ? $new_instance['end_date_ms'] : '';
 
 			return $instance;
 		}
