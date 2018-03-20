@@ -18,7 +18,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		public function __construct() {
 			$widget_options = array(
 				'classname'   => 'dscw-countdown-widget',
-				'description' => __( '', 'dead_simple_countdown' ),
+				'description' => __( 'Displays a timer that counts down to selected date.', 'dead_simple_countdown' ),
 			);
 			parent::__construct( 'dscw-countdown-widget', __( 'Dead Simple CountDown', 'dead_simple_countdown' ), $widget_options );
 		}
@@ -55,9 +55,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						id="<?php echo $this->get_field_id( 'theme' ); ?>">
 					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
 					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
-					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>
-						None
-					</option>
+					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
 				</select>
 			</p>
 			<hr>
