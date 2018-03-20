@@ -51,10 +51,10 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			// End Date.
 			$end_date_field_id   = esc_attr( $this->get_field_id( 'end_date' ) );
 			$end_date_field_name = esc_attr( $this->get_field_name( 'end_date' ) );
-			// End Date Milliseconds.
-			$end_date_ms_field_id   = esc_attr( $this->get_field_id( 'end_date_ms' ) );
-			$end_date_ms_field_name = esc_attr( $this->get_field_name( 'end_date_ms' ) );
-			// End Date.
+			// End Date Timestamp.
+			$end_timestamp_field_id   = esc_attr( $this->get_field_id( 'end_date_ms' ) );
+			$end_timestamp_field_name = esc_attr( $this->get_field_name( 'end_date_ms' ) );
+			// Expired Text.
 			$expired_text_field_id   = esc_attr( $this->get_field_id( 'expired_text' ) );
 			$expired_text_field_name = esc_attr( $this->get_field_name( 'expired_text' ) );
 
@@ -85,7 +85,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						   name="<?php echo $end_date_field_name; ?>"
 						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
-								   altField: '#<?php echo $end_date_ms_field_id; ?>',
+								   altField: '#<?php echo $end_timestamp_field_id; ?>',
 								   altFormat: '@'
 								   });
 								   jQuery(this).datepicker('show');
@@ -95,8 +95,8 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						Date to count down to.
 					</span>
 				</label>
-				<input type="hidden" id="<?php echo $end_date_ms_field_id; ?>"
-					   name="<?php echo $end_date_ms_field_name; ?>"
+				<input type="hidden" id="<?php echo $end_timestamp_field_id; ?>"
+					   name="<?php echo $end_timestamp_field_name; ?>"
 					   value="<?php echo esc_attr( $end_date_ms ); ?>"
 				/>
 			</p>
