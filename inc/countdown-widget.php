@@ -153,36 +153,36 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
 			// UNIX timestamp in milliseconds of the date the countdown is set to expire.
-			$endDate_ms = $instance['end_date_ms'];
+			$end_date_ms = $instance['end_date_ms'];
 			// Text to display when countdown expires.
-			$expiredText = $instance['expired_text'];
+			$expired_text = $instance['expired_text'];
 
 			// Check if we are using a theme and set the CSS class accordingly.
 			switch ( $instance['theme'] ) {
 				case 'light':
-					$themeClass = 'dscw-countdown-theme-light';
+					$theme_class = 'dscw-countdown-theme-light';
 					break;
 				case 'dark':
-					$themeClass = 'dscw-countdown-theme-dark';
+					$theme_class = 'dscw-countdown-theme-dark';
 					break;
 				default:
-					$themeClass = '';
+					$theme_class = '';
 					break;
 			}
 
 			// If a theme is set then add an class for inner wrap.
-			$innerThemeClass = $themeClass ? 'dscw-countdown-theme-inner' : '';
+			$inner_theme_class = $theme_class ? 'dscw-countdown-theme-inner' : '';
 
 			$content = '';
 			// Primary container element. This will carry our options to the front-end via data attributes.
 			$content .= '<div 
-		                class="dscw-countdown-instance ' . $themeClass . '" 
+		                class="dscw-countdown-instance ' . $theme_class . '" 
 		                data-instance="' . $this->id . '" 
-		                data-end-date="' . $endDate_ms . '" 
-		                data-expired-text="' . $expiredText . '"
+		                data-end-date="' . $end_date_ms . '" 
+		                data-expired-text="' . $expired_text . '"
 		             >';
 			// Inner theme wrapper. This gives us another selector to style with.
-			$content .= '<div class="' . $innerThemeClass . '">';
+			$content .= '<div class="' . $inner_theme_class . '">';
 			$content .= '<h3>' . $instance['title_text'] . '</h3>';
 			// Mount point to build the countdown in.
 			$content .= '<div id="timer-mount-' . $this->id . '"></div>';
