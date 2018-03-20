@@ -40,38 +40,20 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			// If no theme is set default to "light".
 			$theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
 
-			/*Field Attributes */
-
-			// Title text.
-			$title_field_id   = esc_attr( $this->get_field_id( 'title_text' ) );
-			$title_field_name = esc_attr( $this->get_field_name( 'title_text' ) );
-			// Theme.
-			$theme_field_id   = esc_attr( $this->get_field_id( 'theme' ) );
-			$theme_field_name = esc_attr( $this->get_field_name( 'theme' ) );
-			// End Date.
-			$end_date_field_id   = esc_attr( $this->get_field_id( 'end_date' ) );
-			$end_date_field_name = esc_attr( $this->get_field_name( 'end_date' ) );
-			// End Date Timestamp.
-			$end_timestamp_field_id   = esc_attr( $this->get_field_id( 'end_date_ms' ) );
-			$end_timestamp_field_name = esc_attr( $this->get_field_name( 'end_date_ms' ) );
-			// Expired Text.
-			$expired_text_field_id   = esc_attr( $this->get_field_id( 'expired_text' ) );
-			$expired_text_field_name = esc_attr( $this->get_field_name( 'expired_text' ) );
-
 			ob_start();
 			?>
 			<p>
-				<label for="<?php echo $title_field_id; ?>">Title:</label>
-				<input type="text" id="<?php echo $title_field_id; ?>"
-					   name="<?php echo $title_field_name; ?>" class="widefat"
+				<label for="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>">Title:</label>
+				<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>"
+					   name="<?php echo esc_attr( $this->get_field_name( 'title_text' ) ); ?>" class="widefat"
 					   value="<?php echo esc_attr( $title_text ); ?>"
 				/>
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $theme_field_id; ?>">Theme:</label>
-				<select name="<?php echo $theme_field_name; ?>"
-						id="<?php echo $theme_field_id; ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>">Theme:</label>
+				<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"
+						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>">
 					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
 					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
 					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
@@ -79,13 +61,13 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $end_date_field_id; ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'end_date' ) ); ?>">
 					End Date:
-					<input type="text" id="<?php echo $end_date_field_id; ?>"
-						   name="<?php echo $end_date_field_name; ?>"
+					<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'end_date' ) ); ?>"
+						   name="<?php echo esc_attr( $this->get_field_name( 'end_date' ) ); ?>"
 						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
-								   altField: '#<?php echo $end_timestamp_field_id; ?>',
+								   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
 								   altFormat: '@'
 								   });
 								   jQuery(this).datepicker('show');
@@ -95,17 +77,17 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						Date to count down to.
 					</span>
 				</label>
-				<input type="hidden" id="<?php echo $end_timestamp_field_id; ?>"
-					   name="<?php echo $end_timestamp_field_name; ?>"
+				<input type="hidden" id="<?php echo esc_attr( $this->get_field_id( 'end_date_ms' ) ); ?>"
+					   name="<?php echo esc_attr( $this->get_field_name( 'end_date_ms' ) ); ?>"
 					   value="<?php echo esc_attr( $end_date_ms ); ?>"
 				/>
 			</p>
 			<hr>
 			<p>
-				<label for="<?php echo $expired_text_field_id; ?>">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'expired_text' ) ); ?>">
 					End Date Text:
-					<input type="text" id="<?php echo $expired_text_field_id; ?>"
-						   name="<?php echo $expired_text_field_name; ?>"
+					<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'expired_text' ) ); ?>"
+						   name="<?php echo esc_attr( $this->get_field_name( 'expired_text' ) ); ?>"
 						   value="<?php echo esc_attr( $expired_text ); ?>"
 					/>
 					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
