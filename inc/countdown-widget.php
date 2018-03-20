@@ -135,6 +135,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$endDate_ms  = $instance['end_date_ms'];
 			$expiredText = $instance['expired_text'];
 
+			// Check if we are using a theme and set the CSS class accordingly
 			switch ( $instance['theme'] ) {
 				case 'light':
 					$themeClass = 'dscw-countdown-theme-light';
@@ -147,18 +148,25 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 					break;
 			}
 
+			// If a theme is set then add an class for inner wrap
+			$innerThemeClass = $themeClass ? 'dscw-countdown-theme-inner' : '';
+
 			$content = '';
+			// Primary container element.
+            // This will carry our options to the front-end via data attributes
 			$content .= '<div 
 		                class="dscw-countdown-instance ' . $themeClass . '" 
 		                data-instance="' . $this->id . '" 
 		                data-end-date="' . $endDate_ms . '" 
 		                data-expired-text="' . $expiredText . '"
 		             >';
-			$content .= '<div class="dscw-countdown-theme-inner">';
+			// Inner theme wrapper. This gives us another selector to style with
+			$content .= '<div class="' . $innerThemeClass . '">';
 			$content .= '<h3>' . $instance['title_text'] . '</h3>';
+			// Mount point to build the countdown in
 			$content .= '<div id="timer-mount-' . $this->id . '"></div>';
-			$content .= '</div>';
-			$content .= '</div>';
+			$content .= '</div>'; // Close inner theme wrapper
+			$content .= '</div>'; // Close primary container
 
 			$output = $args['before_widget'] . $content . $args['after_widget'];
 			echo $output;
