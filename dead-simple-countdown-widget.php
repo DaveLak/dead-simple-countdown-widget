@@ -41,7 +41,7 @@ function dscw_countdown_register_widget() {
 	/**
 	 * Require Dead_Simple_CountDown_Widget class.
 	 */
-	require_once DSCW_COUNTDOWN_TIMER_PATH . 'inc/countdown-widget.php';
+	require_once DSCW_COUNTDOWN_TIMER_PATH . 'inc/class-dead-simple-countdown-widget.php';
 
 	register_widget( 'Dead_Simple_CountDown_Widget' );
 }
