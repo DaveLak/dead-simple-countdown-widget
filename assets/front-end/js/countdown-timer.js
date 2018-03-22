@@ -23,11 +23,11 @@
             this.minutes = undefined;
             this.seconds = undefined;
 
-            // Initialize objects representing each element holding a number
-            this.$numberDays = undefined;
-            this.$numberHours = undefined;
-            this.$numberMinutes = undefined;
-            this.$numberSeconds = undefined;
+            // Initialize properties that will represent the elements holding numbers.
+            this.$numberDays = null;
+            this.$numberHours = null;
+            this.$numberMinutes = null;
+            this.$numberSeconds = null;
 
         }
 
@@ -129,7 +129,7 @@
                 '</ul>'
             );
 
-            // Assign jQuery objects representing each element holding a number to class properties
+            // Assign jQuery objects representing each element holding a number.
             this.$numberDays = $('#' + daysID);
             this.$numberHours = $('#' + hoursID);
             this.$numberMinutes = $('#' + minutesID);
