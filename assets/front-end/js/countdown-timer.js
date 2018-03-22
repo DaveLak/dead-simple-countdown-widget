@@ -219,18 +219,18 @@
      */
     $(document).ready(function () {
         // Get all instances of the countdown widget on the page
-        var countdown = $(".dscw-countdown-instance");
+        var countdown = $('.dscw-countdown-instance');
 
         // Loop over each instance and set it's countdown clock
         countdown.each(function () {
-            var instanceID = $(this).data("instance");
+            var instanceID = $(this).data('instance');
             var settings = {
                 instanceID: instanceID,
-                endDate: $(this).data("end-date"),
-                expiredText: $(this).data("expired-text"),
+                endDate: $(this).data('end-date'),
+                expiredText: $(this).data('expired-text'),
                 $mountNode: $('#timer-mount-' + instanceID)
             };
             new CountDownTimer(settings).start();
-        })
+        });
     });
 })(jQuery);
