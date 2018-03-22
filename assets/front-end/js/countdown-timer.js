@@ -214,6 +214,9 @@
         return CountDownTimer;
     })();
 
+    /**
+     * Instantiate and start all countdowns on the page.
+     */
     $(document).ready(function () {
         // Get all instances of the countdown widget on the page
         var countdown = $(".dscw-countdown-instance");
