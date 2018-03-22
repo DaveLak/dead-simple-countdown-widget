@@ -2,32 +2,64 @@
 
     'use strict';
 
-    /* CountDownTimer class  */
     var CountDownTimer = (function () {
 
-        /* CountDownTimer constructor  */
+        /**
+         * CountDownTimer class constructor.
+         *
+         * @since 1.0.0
+         *
+         * @param {object} settings     Configuration options.
+         * @class
+         */
         function CountDownTimer(settings) {
 
-            // jQuery reference to the DOM Node we add this timer to
+            /**
+             * jQuery reference to the DOM Node we add this timer to.
+             *
+             * @since 1.0.0
+             * @type {jQuery}
+             */
             this.$mountPoint = settings.$mountPoint;
-            // Unique ID of this widget instance
+
+            /**
+             * Unique ID of this widget instance.
+             *
+             * @since 1.0.0
+             * @type {string}
+             */
             this.instanceID = settings.instanceID;
-            // Text displayed when countdown finishes
+
+            /**
+             * Text displayed when countdown finishes.
+             *
+             * @since 1.0.0
+             * @type {string}
+             */
             this.expiredText = settings.expiredText;
-            // UNIX timestamp in milliseconds of the date the countdown is set to expire
+
+            /**
+             * UNIX timestamp in milliseconds of the date the countdown is set to expire.
+             *
+             * @since 1.0.0
+             * @type {(number|string)}
+             */
             this.end = settings.endDate;
 
-            // Initialize remaining time as undefined
-            this.days = undefined;
-            this.hours = undefined;
-            this.minutes = undefined;
-            this.seconds = undefined;
+            // Countdown container element.
+            this.$countDownBox = null;
 
-            // Initialize properties that will represent the elements holding numbers.
+            // Elements that hold remaining time numbers.
             this.$numberDays = null;
             this.$numberHours = null;
             this.$numberMinutes = null;
             this.$numberSeconds = null;
+
+            // Time remaining.
+            this.days = undefined;
+            this.hours = undefined;
+            this.minutes = undefined;
+            this.seconds = undefined;
 
         }
 
@@ -45,6 +77,16 @@
          *  Prototype Methods  *
          ***********************/
 
+        /**
+         * Starts the countdown widget instance.
+         *
+         * Renders the countdown widget to the DOM and starts the countdown.
+         *
+         * @since 2.0.0
+         *
+         * @see CountDownTimer.render
+         * @see CountDownTimer.showRemainingTime
+         */
         CountDownTimer.prototype.start = function () {
             // Reference to calling class
             var self = this;
@@ -58,7 +100,17 @@
             }, 1000);
         };
 
-        // Calculate and update reaming days, hours, minutes, seconds until expiration
+        /**
+         * Calculates, updates, and returns time remaining until expiration.
+         *
+         * Calculates time left in the countdown,
+         * Updates the days, hours, minutes, and seconds class properties with the remaining values;
+         * Returns the amount of time left.
+         *
+         * @since 2.0.0
+         *
+         * @returns {number} UNIX time in milliseconds remaining until expiration.
+         */
         CountDownTimer.prototype.calculateRemaining = function () {
             // Time left until countdown expires
             var timeRemaining = this.end - new Date();
@@ -71,7 +123,17 @@
             return timeRemaining;
         };
 
-        // Recalculates time left in countdown, updating numbers as needed
+        /**
+         * Updates DOM nodes with remaining time or expiration message.
+         *
+         * DOM nodes containing days, hours, minutes, and seconds are updated
+         * with time remaining or the countdown container's child nodes are
+         * replaced with the expiration text if the timer expired.
+         *
+         * @since 2.0.0
+         *
+         * @see CountDownTimer.calculateRemaining
+         */
         CountDownTimer.prototype.showRemainingTime = function () {
 
             // Check if there is still time left before the countdown expires
@@ -92,7 +154,16 @@
             }
         };
 
-        // Draws the box be put the timer in and mounts it to this.$mountPoint
+        /**
+         * Draws the timer.
+         *
+         * Draws the timer container element and it's children, assigns each element
+         * an id attribute based on the widget instance id and in and sets the
+         * $numberDays, $numberHours, $numberMinutes, and $numberSeconds class properties
+         * to jQuery objects referencing the DOM nodes containing the reaming time number.
+         *
+         * @since 2.0.0
+         */
         CountDownTimer.prototype.render = function () {
 
             // ID strings for created HTML elements
@@ -136,7 +207,7 @@
             this.$numberSeconds = $('#' + secondsID);
         };
 
-        // Return CountDownTimer class
+        // Return CountDownTimer class.
         return CountDownTimer;
     })();
 
