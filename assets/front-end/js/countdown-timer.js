@@ -2,6 +2,9 @@
 
     'use strict';
 
+    /**
+     * CountDownTimer class
+     */
     var CountDownTimer = (function () {
 
         /**
@@ -20,7 +23,7 @@
              * @since 1.0.0
              * @type {jQuery}
              */
-            this.$mountPoint = settings.$mountPoint;
+            this.$mountNode = settings.$mountNode;
 
             /**
              * Unique ID of this widget instance.
@@ -44,7 +47,7 @@
              * @since 1.0.0
              * @type {(number|string)}
              */
-            this.end = settings.endDate;
+            this.targetDate = settings.endDate;
 
             // Countdown container element.
             this.$countDownBox = null;
@@ -113,7 +116,7 @@
          */
         CountDownTimer.prototype.calculateRemaining = function () {
             // Time left until countdown expires
-            var timeRemaining = this.end - new Date();
+            var timeRemaining = this.targetDate - new Date();
 
             this.days = Math.floor(timeRemaining / this._day);
             this.hours = Math.floor((timeRemaining % this._day) / this._hour);
@@ -177,7 +180,7 @@
             this.$countDownBox = $('<div/>', {
                 id: timerID,
                 class: 'dscw-countdown-timer-box-container'
-            }).appendTo(this.$mountPoint);
+            }).appendTo(this.$mountNode);
 
             this.$countDownBox.html('' +
                 '<ul class="dscw-countdown-timer-box">' +
@@ -222,7 +225,7 @@
                 instanceID: instanceID,
                 endDate: $(this).data("end-date"),
                 expiredText: $(this).data("expired-text"),
-                $mountPoint: $('#timer-mount-' + instanceID)
+                $mountNode: $('#timer-mount-' + instanceID)
             };
             new CountDownTimer(settings).start();
         })
