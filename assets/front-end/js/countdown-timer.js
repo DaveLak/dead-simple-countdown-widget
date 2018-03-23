@@ -88,17 +88,24 @@
 		 * @since 2.0.0
 		 *
 		 * @see CountDownTimer.render
+		 * @see CountDownTimer.calculateRemaining
 		 * @see CountDownTimer.showRemainingTime
+		 *
+		 * @return {number} `intervalID` of the timer or `0` if the timer already expired.
 		 */
 		CountDownTimer.prototype.start = function () {
-			// Reference to calling class
-			var self = this;
 
 			// Draw the timer
 			this.render();
 
-			this.timer = setInterval(function () {
-				// Run the actual countdown until it expires
+			if (this.calculateRemaining() < 0) {
+				this.expireTimer();
+				return 0;
+			}
+			// Reference to calling class
+			var self = this;
+			// Set the countdown to run every second and return `intervalID` for this timer.
+			return this.timer = setInterval(function () {
 				self.showRemainingTime();
 			}, 1000);
 		};
@@ -148,12 +155,29 @@
 				this.$numberMinutes.text(this.minutes);
 				this.$numberSeconds.text(this.seconds);
 
-			} else {
-				// The countdown expired. Stop future execution of this countdown.
-				clearInterval(this.timer);
-				// Set the expiration text and exit
-				this.$countDownBox.html('<h4 class="dscw-countdown-expired-text">' + this.expiredText + '</h4>');
-				// Finished
+			}
+		};
+
+		/**
+		 * Stops execution of a timer and replaces the displayed count with optional text.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param {number} [timer=this.timer] - Optional `intervalID` returned from `setInterval()` to clear.
+		 * @param {(string|false)} [displayText=this.expiredText] - Text to replace numbers shown or `false` for no text.
+		 */
+		CountDownTimer.prototype.expireTimer = function (timer, displayText) {
+			// If `timer` is null or undefined `timerID === this.timer`
+			var timerID = (null == timer) ? this.timer : timer;
+			// If `displayText` is null or undefined `text === this.expiredText`.
+			var text = (null == displayText) ? this.expiredText : displayText;
+
+			// Stop updating the timer.
+			clearInterval(timerID);
+
+			// Replace numbers displayed with `text` if not falsey.
+			if (text) {
+				this.$countDownBox.html('<h4 class="dscw-countdown-expired-text">' + text + '</h4>');
 			}
 		};
 
