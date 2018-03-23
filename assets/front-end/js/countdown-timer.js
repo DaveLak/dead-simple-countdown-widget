@@ -126,12 +126,12 @@
 		 *
 		 * @param {jQuery} $element - jQuery object to animate.
 		 * @param {(number|string)} endPoint - Timestamp the animation will move toward.
-		 * @param {(number|string)} [transitionDuration=1500] - Number of milliseconds the animation will run for.
+		 * @param {(number|string)} [transitionDuration=2000] - Number of milliseconds the animation will run for.
 		 */
 		CountDownTimer.prototype.numberTransition = function ($element, endPoint, transitionDuration) {
 			// Transition numbers from 0 to the final number
 			$({numberCount: $element.text()}).animate({numberCount: endPoint}, {
-				duration: transitionDuration || 1500,
+				duration: transitionDuration || 2000,
 				step: function () {
 					$element.text(Math.floor(this.numberCount));
 				},
