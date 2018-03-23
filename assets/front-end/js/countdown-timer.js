@@ -89,6 +89,7 @@
 		 *
 		 * @see CountDownTimer.render
 		 * @see CountDownTimer.calculateRemaining
+		 * @see CountDownTimer.numberTransition
 		 * @see CountDownTimer.showRemainingTime
 		 *
 		 * @return {number} `intervalID` of the timer or `0` if the timer already expired.
@@ -98,16 +99,46 @@
 			// Draw the timer
 			this.render();
 
+			// Set expired text if there's no time left
 			if (this.calculateRemaining() < 0) {
 				this.expireTimer();
 				return 0;
 			}
+
+			// Animate the transition of the numbers from 0 to remaining value
+			this.numberTransition(this.$numberDays, this.days);
+			this.numberTransition(this.$numberHours, this.hours);
+			this.numberTransition(this.$numberMinutes, this.minutes);
+			this.numberTransition(this.$numberSeconds, this.seconds);
+
 			// Reference to calling class
 			var self = this;
 			// Set the countdown to run every second and return `intervalID` for this timer.
 			return this.timer = setInterval(function () {
 				self.showRemainingTime();
 			}, 1000);
+		};
+
+		/**
+		 * Animates the number inside an element from it's value to the value of `endPoint`.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param {jQuery} $element - jQuery object to animate.
+		 * @param {(number|string)} endPoint - Timestamp the animation will move toward.
+		 * @param {(number|string)} [transitionDuration=1500] - Number of milliseconds the animation will run for.
+		 */
+		CountDownTimer.prototype.numberTransition = function ($element, endPoint, transitionDuration) {
+			// Transition numbers from 0 to the final number
+			$({numberCount: $element.text()}).animate({numberCount: endPoint}, {
+				duration: transitionDuration || 1500,
+				step: function () {
+					$element.text(Math.floor(this.numberCount));
+				},
+				complete: function () {
+					$element.text(this.numberCount);
+				}
+			});
 		};
 
 		/**
