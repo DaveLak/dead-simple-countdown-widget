@@ -2,6 +2,7 @@
 /* Node standard libs and other utilities */
 var path = require('path');
 var del = require('del');
+var chalk = require('chalk');
 
 /* Gulp and Gulp Utilities */
 var gulp = require('gulp');
@@ -21,9 +22,10 @@ var cssnano = require('cssnano');
 // True if $NODE_ENV is set to 'production'.
 var isProd = (process.env.NODE_ENV === 'production');
 
-var RELEASE_DIR = 'dead-simple-countdown-widget/';
-// Output directory
-var OUT_DIR = './';
+// Name of the directory to write the production bundle to.
+var RELEASE_DIR = './dead-simple-countdown-widget/';
+// Output directory.
+var OUT_DIR = isProd ? RELEASE_DIR : './';
 
 var PATHS = {
 	scripts: {
@@ -50,9 +52,14 @@ var PATHS = {
 	}
 };
 
-// Remove build directory so we can start fresh
+/*********************
+ *       Tasks       *
+ *********************/
+
+// Remove built directories so we can start fresh.
 gulp.task('clean', function () {
 	return del([
+		RELEASE_DIR,
 		PATHS.scripts.dest,
 		PATHS.styles.dest,
 		PATHS.images.dest
@@ -60,7 +67,6 @@ gulp.task('clean', function () {
 });
 
 gulp.task('scripts', function () {
-
 	return gulp.src(PATHS.scripts.src)
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
@@ -101,6 +107,7 @@ gulp.task('php', function () {
 
 gulp.task('assets', ['images', 'styles', 'scripts']);
 
+// Bundle files for release and package into a zip.
 gulp.task('bundle', ['assets', 'php'], function () {
 	return gulp.src(RELEASE_DIR + '**/*')
 		.pipe(zip('dead-simple-countdown-widget.zip'))
@@ -113,14 +120,37 @@ gulp.task('watch', ['assets'], function () {
 	var imageWatcher = gulp.watch(PATHS.images.src, ['images']);
 
 	scriptWatcher.on('change', function(event) {
-		console.log('File ' + path.basename(event.path) + ' was ' + event.type + ', running tasks...');
+		console.log(
+			'File ' + chalk.blue.bold(path.basename(event.path)) +
+			' was ' + styleEventText(event.type) + ', running task "scripts".'
+		);
 	});
 	styleWatcher.on('change', function(event) {
-		console.log('File ' + path.basename(event.path) + ' was ' + event.type + ', running tasks...');
+		console.log(
+			'File ' + chalk.blue.bold(path.basename(event.path)) +
+			' was ' + styleEventText(event.type) + ', running task "styles".'
+		);
 	});
 	imageWatcher.on('change', function(event) {
-		console.log('File ' + path.basename(event.path) + ' was ' + event.type + ', running tasks...');
+		console.log(
+			'File ' + chalk.blue.bold(path.basename(event.path)) +
+			' was ' + styleEventText(event.type) + ', running task "images".'
+		);
 	});
 });
 
 gulp.task('default', ['assets']);
+
+/****************
+ *    Utils     *
+ ****************/
+function styleEventText(eventType) {
+	switch (eventType){
+		case 'added':
+			return chalk.green.underline(eventType);
+		case 'changed':
+			return chalk.yellow.underline(eventType);
+		case 'deleted':
+			return chalk.red.underline(eventType);
+	}
+}
