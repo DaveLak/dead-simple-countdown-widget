@@ -55,7 +55,7 @@ function dscw_countdown_register_assets() {
 	// Front end JS.
 	wp_register_script(
 		'dead-simple-countdown-widget-js',
-		DSCW_COUNTDOWN_TIMER_URL . 'assets/front-end/js/countdown-timer.js',
+		DSCW_COUNTDOWN_TIMER_URL . 'built/assets/front-end/js/countdown-timer.js',
 		array( 'jquery' ),
 		'1.0.3',
 		true
@@ -63,7 +63,7 @@ function dscw_countdown_register_assets() {
 	// Front end styles.
 	wp_register_style(
 		'dead-simple-countdown-widget-styles',
-		DSCW_COUNTDOWN_TIMER_URL . 'assets/front-end/css/countdown-timer.css',
+		DSCW_COUNTDOWN_TIMER_URL . 'built/assets/front-end/css/countdown-timer.css',
 		array(),
 		'1.0.2'
 	);
@@ -81,7 +81,7 @@ function dscw_countdown_admin_scripts( $page ) {
 	// Admin Styles.
 	wp_register_style(
 		'dscw-jquery-base-theme-styles',
-		DSCW_COUNTDOWN_TIMER_URL . 'assets/admin/css/jquery-ui-base-theme.css',
+		DSCW_COUNTDOWN_TIMER_URL . 'built/assets/admin/css/jquery-ui-base-theme.css',
 		array(),
 		'1.0.0'
 	);

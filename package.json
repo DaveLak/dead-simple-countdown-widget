@@ -1,0 +1,34 @@
+{
+  "name": "dead-simple-countdown-widget",
+  "version": "2.0.0",
+  "main": "gulpfile.js",
+  "repository": "https://github.com/DaveLak/dead-simple-countdown-widget.git",
+  "author": "David Lakin <deadsimple@themoderndev.com>",
+  "license": "GPL-2.0-or-later",
+  "private": true,
+  "scripts": {
+    "watch": "gulp clean && gulp watch",
+    "dev": "gulp clean && cross-env NODE_ENV=development gulp",
+    "prod": "gulp clean && cross-env NODE_ENV=production gulp",
+    "bundle": "cross-env NODE_ENV=production gulp bundle"
+  },
+  "browserslist": [
+    "> 5%",
+    "last 2 versions"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^8.2.0",
+    "cross-env": "^5.1.4",
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-changed": "^3.2.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "gulp-zip": "^4.1.0"
+  }
+}
