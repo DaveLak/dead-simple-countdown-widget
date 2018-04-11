@@ -14,19 +14,28 @@ var zip = require('gulp-zip');
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
 var imagemin = require('gulp-imagemin');
+var babel = require('gulp-babel');
 var uglifyJS = require('gulp-uglify');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
-// True if $NODE_ENV is set to 'production'.
-var isProd = (process.env.NODE_ENV === 'production');
+// True if $NODE_ENV is set to anything except'production'.
+var isDevelopment = (process.env.NODE_ENV !== 'production');
 
-// Name of the directory to write the production bundle to.
-var RELEASE_DIR = './dead-simple-countdown-widget/';
-// Output directory.
-var OUT_DIR = isProd ? RELEASE_DIR : './';
+// True when we should build create a release package.
+var isRelease = (process.env.BUILD_TYPE === 'release');
 
+// Name of the plugin, used in file and directory names.
+var PLUGIN_NAME = 'dead-simple-countdown-widget';
+
+// Name of the directory to write the release files and bundle to.
+var RELEASE_DIR = './release';
+
+// Directory where files get written to.
+var OUT_DIR = isRelease ? RELEASE_DIR + '/' + PLUGIN_NAME + '/' : './';
+
+// Read/Write paths of files.
 var PATHS = {
 	scripts: {
 		src: [
@@ -66,14 +75,18 @@ gulp.task('clean', function () {
 	]);
 });
 
+//
 gulp.task('scripts', function () {
 	return gulp.src(PATHS.scripts.src)
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
-		.pipe(gulpif(!isProd, sourcemaps.init()))
+		.pipe(sourcemaps.init())
+			.pipe(babel({
+				presets: ['env']
+			}))
 			.pipe(uglifyJS())
-			.pipe(rename({suffix: '.min.'}))
-		.pipe(gulpif(!isProd, sourcemaps.write()))
+			.pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write({addComment: isDevelopment}))
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
 
@@ -85,17 +98,17 @@ gulp.task('styles', function () {
 	return gulp.src(PATHS.styles.src)
 		.pipe(changed(PATHS.styles.dest))
 		.pipe(gulp.dest(PATHS.styles.dest))
-		.pipe(gulpif(!isProd, sourcemaps.init()))
+		.pipe(sourcemaps.init())
 			.pipe(postcss(plugins))
-			.pipe(rename({suffix: '.min.'}))
-		.pipe(gulpif(!isProd, sourcemaps.write()))
+			.pipe(rename({suffix: '.min'}))
+		.pipe(sourcemaps.write({addComment: isDevelopment}))
 		.pipe(gulp.dest(PATHS.styles.dest));
 });
 
 gulp.task('images', function () {
 	return gulp.src(PATHS.images.src)
 		.pipe(changed(PATHS.images.dest))
-		.pipe(gulpif(isProd, imagemin()))
+		.pipe(gulpif((false === isDevelopment), imagemin()))
 		.pipe(gulp.dest(PATHS.images.dest));
 });
 
@@ -105,15 +118,9 @@ gulp.task('php', function () {
 		.pipe(gulp.dest(PATHS.php.dest));
 });
 
-gulp.task('assets', ['images', 'styles', 'scripts']);
-
-// Bundle files for release and package into a zip.
-gulp.task('bundle', ['assets', 'php'], function () {
-	return gulp.src(RELEASE_DIR + '**/*')
-		.pipe(zip('dead-simple-countdown-widget.zip'))
-		.pipe(gulp.dest('./'));
-});
-
+/*********************
+ *  Watch
+ * *******************/
 gulp.task('watch', ['assets'], function () {
 	var scriptWatcher = gulp.watch(PATHS.scripts.src, ['scripts']);
 	var styleWatcher = gulp.watch(PATHS.styles.src, ['styles']);
@@ -138,6 +145,19 @@ gulp.task('watch', ['assets'], function () {
 		);
 	});
 });
+
+/*************************
+ * Packaging for release *
+ *************************/
+// Builds all plguin files to path defined in `RELEASE_DIR`
+gulp.task('bundle', ['assets', 'php'], function () {
+	return gulp.src(RELEASE_DIR + '/**/*')
+		.pipe(zip(PLUGIN_NAME + '.zip'))
+		.pipe(gulp.dest(RELEASE_DIR));
+});
+
+
+gulp.task('assets', ['images', 'styles', 'scripts']);
 
 gulp.task('default', ['assets']);
 

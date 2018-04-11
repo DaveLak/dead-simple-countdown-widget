@@ -10,7 +10,7 @@
     "watch": "gulp clean && gulp watch",
     "dev": "gulp clean && cross-env NODE_ENV=development gulp",
     "prod": "gulp clean && cross-env NODE_ENV=production gulp",
-    "bundle": "cross-env NODE_ENV=production gulp bundle"
+    "bundle": "gulp clean && cross-env NODE_ENV=production BUILD_TYPE=release gulp bundle"
   },
   "browserslist": [
     "> 5%",
@@ -18,11 +18,14 @@
   ],
   "devDependencies": {
     "autoprefixer": "^8.2.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chalk": "^2.3.2",
     "cross-env": "^5.1.4",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
     "gulp-changed": "^3.2.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^4.1.0",

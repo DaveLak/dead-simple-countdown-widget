@@ -22,7 +22,7 @@ node_modules/
 
 # Builds
 built/
-dead-simple-countdown-widget/
+release/
 dead-simple-countdown-widget.zip
 
 # Debug
