@@ -15,7 +15,8 @@
   },
   "browserslist": [
     "> 5%",
-    "last 2 versions"
+    "last 2 versions",
+    "Firefox ESR"
   ],
   "devDependencies": {
     "autoprefixer": "^8.2.0",
