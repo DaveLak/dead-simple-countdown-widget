@@ -1,6 +1,12 @@
-(function ($) {
+/*
+ * The following two comments are here to remind us this file gets wrapped in
+ * an immediately invoked function expression (IIFE) and uses strict mode.
+ * Babel adds `'use strict;'` in the global scope when using preset-env so it's
+ * easier to add the IIFE at build time after Babel and protect the global scope.
+ */
 
-	'use strict';
+// (function () {
+	// 'use strict';
 
 	/**
 	 * CountDownTimer class
@@ -114,7 +120,7 @@
 			// Reference to calling class
 			var self = this;
 			// Set the countdown to run every second and return `intervalID` for this timer.
-			return this.timer = setInterval(function () {
+			return this.timer = setInterval(function () { /* jshint ignore:line */
 				self.showRemainingTime();
 			}, 1000);
 		};
@@ -130,7 +136,7 @@
 		 */
 		CountDownTimer.prototype.numberTransition = function ($element, endPoint, transitionDuration) {
 			// Transition numbers from 0 to the final number
-			$({numberCount: $element.text()}).animate({numberCount: endPoint}, {
+			jQuery({numberCount: $element.text()}).animate({numberCount: endPoint}, {
 				duration: transitionDuration || 2000,
 				step: function () {
 					$element.text(Math.floor(this.numberCount));
@@ -232,9 +238,9 @@
 			var secondsID = this.instanceID + '-seconds';
 
 			// Create and mount the container
-			this.$countDownBox = $('<div/>', {
+			this.$countDownBox = jQuery('<div/>', {
 				id: timerID,
-				class: 'dscw-countdown-timer-box-container'
+				class: 'dscw-countdown-timer-box-container'/* jshint ignore:line */
 			}).appendTo(this.$mountNode);
 
 			this.$countDownBox.html('' +
@@ -259,10 +265,10 @@
 			);
 
 			// Assign jQuery objects representing each element holding a number.
-			this.$numberDays = $('#' + daysID);
-			this.$numberHours = $('#' + hoursID);
-			this.$numberMinutes = $('#' + minutesID);
-			this.$numberSeconds = $('#' + secondsID);
+			this.$numberDays = jQuery('#' + daysID);
+			this.$numberHours = jQuery('#' + hoursID);
+			this.$numberMinutes = jQuery('#' + minutesID);
+			this.$numberSeconds = jQuery('#' + secondsID);
 		};
 
 		// Return CountDownTimer class.
@@ -272,20 +278,21 @@
 	/**
 	 * Instantiate and start all countdowns on the page.
 	 */
-	$(document).ready(function () {
+	jQuery(document).ready(function () {
 		// Get all instances of the countdown widget on the page
-		var countdown = $('.dscw-countdown-instance');
+		var countdown = jQuery('.dscw-countdown-instance');
 
 		// Loop over each instance and set it's countdown clock
 		countdown.each(function () {
-			var instanceID = $(this).data('instance');
+			var instanceID = jQuery(this).data('instance');
 			var settings = {
 				instanceID: instanceID,
-				endDate: $(this).data('end-date'),
-				expiredText: $(this).data('expired-text'),
-				$mountNode: $('#timer-mount-' + instanceID)
+				endDate: jQuery(this).data('end-date'),
+				expiredText: jQuery(this).data('expired-text'),
+				$mountNode: jQuery('#timer-mount-' + instanceID)
 			};
 			new CountDownTimer(settings).start();
 		});
 	});
-})(jQuery);
+// The following comment is here to remind you this code is wrapped in an IIFE.
+// })();

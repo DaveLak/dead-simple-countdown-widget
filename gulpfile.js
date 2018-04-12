@@ -14,6 +14,7 @@ var zip = require('gulp-zip');
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
 var imagemin = require('gulp-imagemin');
+var iife = require('gulp-iife');
 var babel = require('gulp-babel');
 var uglifyJS = require('gulp-uglify');
 var postcss = require('gulp-postcss');
@@ -81,8 +82,10 @@ gulp.task('scripts', function () {
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
 		.pipe(sourcemaps.init())
-			.pipe(babel({
-				presets: ['env']
+			.pipe(babel({ presets: ['env'] }))
+			.pipe(iife({
+				useStrict: false,
+				prependSemicolon: false
 			}))
 			.pipe(uglifyJS())
 			.pipe(rename({suffix: '.min'}))

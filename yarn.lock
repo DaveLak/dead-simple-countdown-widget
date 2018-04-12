@@ -2031,6 +2031,15 @@ gulp-if@^2.0.2:
     ternary-stream "^2.0.1"
     through2 "^2.0.1"
 
+gulp-iife@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/gulp-iife/-/gulp-iife-0.3.0.tgz#8a748c8e973dd0c674e8c5739d917d477371485b"
+  dependencies:
+    lodash "^3.6.0"
+    source-map "^0.5.3"
+    through2 "^2.0.0"
+    vinyl-sourcemaps-apply "^0.2.1"
+
 gulp-imagemin@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/gulp-imagemin/-/gulp-imagemin-4.1.0.tgz#5ce347f1d1706fed3cc8f1777ca9094a583b50b7"
@@ -2844,6 +2853,10 @@ lodash.templatesettings@^3.0.0:
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+
+lodash@^3.6.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
 lodash@^4.13.1, lodash@^4.17.4:
   version "4.17.5"
