@@ -7,6 +7,7 @@
   "license": "GPL-2.0-or-later",
   "private": true,
   "scripts": {
+    "clean": "gulp clean",
     "watch": "gulp clean && gulp watch",
     "dev": "gulp clean && cross-env NODE_ENV=development gulp",
     "prod": "gulp clean && cross-env NODE_ENV=production gulp",
