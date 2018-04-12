@@ -82,13 +82,13 @@ gulp.task('scripts', function () {
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
 		.pipe(sourcemaps.init())
-			.pipe(babel({ presets: ['env'] }))
-			.pipe(iife({
-				useStrict: false,
-				prependSemicolon: false
-			}))
-			.pipe(uglifyJS())
-			.pipe(rename({suffix: '.min'}))
+		.pipe(babel({presets: ['env']}))
+		.pipe(iife({
+			useStrict: false,
+			prependSemicolon: false
+		}))
+		.pipe(uglifyJS())
+		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write({addComment: isDevelopment}))
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
@@ -102,8 +102,8 @@ gulp.task('styles', function () {
 		.pipe(changed(PATHS.styles.dest))
 		.pipe(gulp.dest(PATHS.styles.dest))
 		.pipe(sourcemaps.init())
-			.pipe(postcss(plugins))
-			.pipe(rename({suffix: '.min'}))
+		.pipe(postcss(plugins))
+		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write({addComment: isDevelopment}))
 		.pipe(gulp.dest(PATHS.styles.dest));
 });
@@ -129,19 +129,19 @@ gulp.task('watch', ['assets'], function () {
 	var styleWatcher = gulp.watch(PATHS.styles.src, ['styles']);
 	var imageWatcher = gulp.watch(PATHS.images.src, ['images']);
 
-	scriptWatcher.on('change', function(event) {
+	scriptWatcher.on('change', function (event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "scripts".'
 		);
 	});
-	styleWatcher.on('change', function(event) {
+	styleWatcher.on('change', function (event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "styles".'
 		);
 	});
-	imageWatcher.on('change', function(event) {
+	imageWatcher.on('change', function (event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "images".'
@@ -168,7 +168,7 @@ gulp.task('default', ['assets']);
  *    Utils     *
  ****************/
 function styleEventText(eventType) {
-	switch (eventType){
+	switch (eventType) {
 		case 'added':
 			return chalk.green.underline(eventType);
 		case 'changed':
