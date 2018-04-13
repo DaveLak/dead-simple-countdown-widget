@@ -9,7 +9,12 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
 var changed = require('gulp-changed');
+var notify = require("gulp-notify");
 var zip = require('gulp-zip');
+
+/*Linting tools*/
+var jshint = require('gulp-jshint');
+
 
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
@@ -76,8 +81,7 @@ gulp.task('clean', function () {
 	]);
 });
 
-//
-gulp.task('scripts', function () {
+gulp.task('scripts', ['lint-scripts'], function () {
 	return gulp.src(PATHS.scripts.src)
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
@@ -149,6 +153,17 @@ gulp.task('watch', ['assets'], function () {
 	});
 });
 
+/************************
+ *    Linting
+ *************************/
+gulp.task('lint', ['lint-scripts']);
+
+gulp.task('lint-scripts', function () {
+	return gulp.src(PATHS.scripts.src)
+		.pipe(jshint())
+		.pipe(notify(jsHintReporter));
+});
+
 /*************************
  * Packaging for release *
  *************************/
@@ -176,4 +191,16 @@ function styleEventText(eventType) {
 		case 'deleted':
 			return chalk.red.underline(eventType);
 	}
+}
+
+function jsHintReporter(file) {
+	if (file.jshint.success) {
+		return false;
+	}
+	var errors = file.jshint.results.map(function (data) {
+		if (data.error) {
+			return '(' + data.error.line + ':' + data.error.character + ') ' + data.error.reason;
+		}
+	}).join('\n');
+	return file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors;
 }
