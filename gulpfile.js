@@ -15,7 +15,6 @@ var zip = require('gulp-zip');
 /*Linting tools*/
 var jshint = require('gulp-jshint');
 
-
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
 var imagemin = require('gulp-imagemin');
@@ -173,7 +172,6 @@ gulp.task('bundle', ['assets', 'php'], function () {
 		.pipe(zip(PLUGIN_NAME + '.zip'))
 		.pipe(gulp.dest(RELEASE_DIR));
 });
-
 
 gulp.task('assets', ['images', 'styles', 'scripts']);
 
