@@ -166,7 +166,7 @@ gulp.task('lint-scripts', function () {
 /*************************
  * Packaging for release *
  *************************/
-// Builds all plguin files to path defined in `RELEASE_DIR`
+// Builds all plugin files to path defined in `RELEASE_DIR`
 gulp.task('bundle', ['assets', 'php'], function () {
 	return gulp.src([RELEASE_DIR + '/**/*', '!*.zip'])
 		.pipe(zip(PLUGIN_NAME + '.zip'))

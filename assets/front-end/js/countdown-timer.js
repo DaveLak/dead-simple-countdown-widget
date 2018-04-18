@@ -12,6 +12,11 @@
  * CountDownTimer class
  */
 var CountDownTimer = (function () {
+	// Scoped constants holding time bases in milliseconds.
+	var _SECOND = 1000,
+		_MINUTE = 60000,
+		_HOUR = 3600000,
+		_DAY = 86400000;
 
 	/**
 	 * CountDownTimer class constructor.
@@ -64,23 +69,13 @@ var CountDownTimer = (function () {
 		this.$numberMinutes = null;
 		this.$numberSeconds = null;
 
-		// Time remaining.
-		this.days = undefined;
-		this.hours = undefined;
-		this.minutes = undefined;
-		this.seconds = undefined;
+		// Initialize time remaining to 0.
+		this.days = 0;
+		this.hours = 0;
+		this.minutes = 0;
+		this.seconds = 0;
 
 	}
-
-	/************************
-	 * Prototype Properties *
-	 ************************/
-
-	// Time Bases in Milliseconds
-	CountDownTimer.prototype._second = 1000;
-	CountDownTimer.prototype._minute = 60000;
-	CountDownTimer.prototype._hour = 3600000;
-	CountDownTimer.prototype._day = 86400000;
 
 	/***********************
 	 *  Prototype Methods  *
@@ -162,10 +157,10 @@ var CountDownTimer = (function () {
 		// Time left until countdown expires
 		var timeRemaining = this.targetDate - new Date();
 
-		this.days = Math.floor(timeRemaining / this._day);
-		this.hours = Math.floor((timeRemaining % this._day) / this._hour);
-		this.minutes = Math.floor((timeRemaining % this._hour) / this._minute);
-		this.seconds = Math.floor((timeRemaining % this._minute) / this._second);
+		this.days = Math.floor(timeRemaining / _DAY);
+		this.hours = Math.floor((timeRemaining % _DAY) / _HOUR);
+		this.minutes = Math.floor((timeRemaining % _HOUR) / _MINUTE);
+		this.seconds = Math.floor((timeRemaining % _MINUTE) / _SECOND);
 
 		return timeRemaining;
 	};
@@ -294,5 +289,6 @@ jQuery(document).ready(function () {
 		new CountDownTimer(settings).start();
 	});
 });
+
 // The following comment is here to remind you this code is wrapped in an IIFE.
 // })();
