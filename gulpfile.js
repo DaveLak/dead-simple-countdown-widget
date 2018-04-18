@@ -9,7 +9,7 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
 var changed = require('gulp-changed');
-var notify = require("gulp-notify");
+var notify = require('gulp-notify');
 var zip = require('gulp-zip');
 
 /*Linting tools*/
@@ -99,7 +99,7 @@ gulp.task('scripts', ['lint-scripts'], function () {
 gulp.task('styles', function () {
 	var plugins = [
 		autoprefixer(),
-		cssnano()
+		cssnano({zindex: false})
 	];
 	return gulp.src(PATHS.styles.src)
 		.pipe(changed(PATHS.styles.dest))
