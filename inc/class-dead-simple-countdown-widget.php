@@ -188,29 +188,44 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			// Check if we are using a theme and set the CSS class accordingly.
 			switch ( $instance['theme'] ) {
 				case 'light':
-					$theme_class = 'dscw-countdown-theme-light';
+					$container_class = 'dscw-countdown-theme-light ';
 					break;
 				case 'dark':
-					$theme_class = 'dscw-countdown-theme-dark';
+					$container_class = 'dscw-countdown-theme-dark ';
 					break;
 				default:
-					$theme_class = '';
+					$container_class = '';
 					break;
 			}
 
+			/**
+			 * Filter for modifying the HTML class attribute applied to the primary widget container.
+			 *
+			 * Allows modifying the class names added to this instance's container element.
+			 * Built in themes add a class to this element that's used as the root CSS selector.
+			 * Be sure to only append to $container_class if you do not want to overwrite the built in theme classes.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string $container_class           Class name to be added to timer's container element.
+			 * @param string $instance ['theme']    Currently selected theme.
+			 * @param string $this ->id             Unique ID string of the current instance (id_base-number).
+			 */
+			$container_class = apply_filters( 'dscw_container_element_class_attribute', $container_class, $instance['theme'], $this->id );
+
 			// If a theme is set then add an class for inner wrap.
-			$inner_theme_class = $theme_class ? 'dscw-countdown-theme-inner' : '';
+			$inner_theme_class = $container_class ? 'dscw-countdown-theme-inner' : '';
 
 			$content = '';
 			// Primary container element. This will carry our options to the front-end via data attributes.
 			$content .= '<div 
-		                class="dscw-countdown-instance ' . esc_attr( $theme_class ) . '" 
+		                class="dscw-countdown-instance ' . esc_attr( $container_class ) . '" 
 		                data-instance="' . esc_attr( $this->id ) . '" 
 		                data-end-date="' . esc_attr( $end_date_ms ) . '" 
 		                data-expired-text="' . esc_attr( $expired_text ) . '"
 		             >';
 
-			// Inner theme wrapper. This class is empty when $theme_class is empty.
+			// Inner theme wrapper. This class is empty when $container_class is empty.
 			$content .= '<div class="' . esc_attr( $inner_theme_class ) . '">';
 
 			// Only add title if it's set.
