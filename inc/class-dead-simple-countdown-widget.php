@@ -39,14 +39,25 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		 */
 		public function form( $instance ) {
 
-			/* Saved values */
+			/**
+			 * Filter for modifying the widgets default theme.
+			 *
+			 * If this is a new instance and there is no theme set this filter
+			 * allows you to set the default selected theme option. The returned
+			 * value must be a string matching a theme key in the $available_themes array.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string 'light' Default theme key.
+			 */
+			$default_theme = apply_filters( 'dscw_default_widget_theme', 'light' );
+
+			$active_theme = ! empty( $instance['theme'] ) ? $instance['theme'] : $default_theme;
 
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
-			// If no theme is set default to "light".
-			$active_theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
 
 			$available_themes = array(
 				'light' => 'Light',
@@ -66,13 +77,14 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			 *
 			 * @since 2.0.0
 			 *
+			 * @param array $available_themes Associative array in the shape of 'theme-key' => 'Label'.
 			 */
 			$available_themes = apply_filters( 'dscw_available_widget_themes', $available_themes );
 
 			$theme_options = '';
-			foreach ( $available_themes as $value => $label ) {
-				$value         = esc_attr( $value );
-				$theme_options .= '<option value="' . $value . '" ' . ( ( $value === $active_theme ) ? 'selected' : '' ) . '>'
+			foreach ( $available_themes as $theme_key => $label ) {
+				$theme_key     = esc_attr( $theme_key );
+				$theme_options .= '<option value="' . $theme_key . '" ' . ( ( $theme_key === $active_theme ) ? 'selected' : '' ) . '>'
 								  . esc_html( $label ) .
 								  '</option>';
 			}
