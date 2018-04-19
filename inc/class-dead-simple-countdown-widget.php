@@ -46,9 +46,36 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
 			// If no theme is set default to "light".
-			$theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
+			$active_theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
 
-			ob_start();
+			$available_themes = array(
+				'light' => 'Light',
+				'dark'  => 'Dark',
+				'none'  => 'None',
+			);
+
+			/**
+			 * Filter for modifying available theme choices in the widget form.
+			 *
+			 * The value passed is an associative array consisting $keys specifying
+			 * the name of the theme and $values specifying the user-facing label text.
+			 * $keys are passed through `esc_attr()` so the should not contain <, >, &, ” or ‘
+			 * $values are passed through `esc_html()`. An example of a well formatted theme
+			 * option would be:
+			 *        $available_themes['my-awesome-theme'] = 'My Awesome Theme';
+			 *
+			 * @since 2.0.0
+			 *
+			 */
+			$available_themes = apply_filters( 'dscw_available_widget_themes', $available_themes );
+
+			$theme_options = '';
+			foreach ( $available_themes as $value => $label ) {
+				$value         = esc_attr( $value );
+				$theme_options .= '<option value="' . $value . '" ' . ( ( $value === $active_theme ) ? 'selected' : '' ) . '>'
+								  . esc_html( $label ) .
+								  '</option>';
+			}
 			?>
 			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>">Title:</label>
@@ -61,10 +88,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>">Theme:</label>
 				<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"
-						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>">
-					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
-					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
-					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
+						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>"
+				>
+					<?php echo $theme_options ?>
 				</select>
 			</div>
 			<hr>
@@ -75,11 +101,11 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						   name="<?php echo esc_attr( $this->get_field_name( 'end_date' ) ); ?>"
 						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
-								   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
-								   altFormat: '@' // Unix timestamp (ms since 01/01/1970).
-								   });
-								   jQuery(this).datepicker('show');
-								   "
+							   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
+							   altFormat: '@' // Unix timestamp (ms since 01/01/1970).
+							   });
+							   jQuery(this).datepicker('show');
+							   "
 					/>
 					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
 						Date to count down to.
@@ -105,7 +131,6 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			</div>
 
 			<?php
-			echo ob_get_clean();
 		}
 
 		/**
