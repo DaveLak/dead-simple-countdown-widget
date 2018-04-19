@@ -180,6 +180,18 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_script( 'dead-simple-countdown-widget-js' );
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
+			/**
+			 * Action fired when frontend rendering starts.
+			 *
+			 * This is a great place to enqueue any custom theme CSS.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string $instance['theme']    Currently selected theme key.
+			 * @param string $this->id             Unique ID string of the current instance (id_base-number).
+			 */
+			do_action( 'dscw_start_widget_render', $instance['theme'], $this->id );
+
 			// UNIX timestamp in milliseconds of the date the countdown is set to expire.
 			$end_date_ms = $instance['end_date_ms'];
 			// Text to display when countdown expires.
@@ -207,9 +219,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			 *
 			 * @since 2.0.0
 			 *
-			 * @param string $container_class           Class name to be added to timer's container element.
-			 * @param string $instance ['theme']    Currently selected theme.
-			 * @param string $this ->id             Unique ID string of the current instance (id_base-number).
+			 * @param string $container_class      Class name to be added to timer's container element.
+			 * @param string $instance['theme']    Currently selected theme key.
+			 * @param string $this->id             Unique ID string of the current instance (id_base-number).
 			 */
 			$container_class = apply_filters( 'dscw_container_element_class_attribute', $container_class, $instance['theme'], $this->id );
 
