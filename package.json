@@ -1,0 +1,45 @@
+{
+  "name": "dead-simple-countdown-widget",
+  "version": "2.0.0",
+  "main": "gulpfile.js",
+  "repository": "https://github.com/DaveLak/dead-simple-countdown-widget.git",
+  "author": "David Lakin <deadsimple@themoderndev.com>",
+  "license": "GPL-2.0-or-later",
+  "private": true,
+  "scripts": {
+    "clean": "gulp clean",
+    "lint": "gulp lint",
+    "watch": "gulp clean && gulp watch",
+    "dev": "gulp clean && cross-env NODE_ENV=development gulp",
+    "prod": "gulp clean && cross-env NODE_ENV=production gulp",
+    "bundle": "gulp clean && cross-env NODE_ENV=production BUILD_TYPE=release gulp bundle"
+  },
+  "browserslist": [
+    "> 5%",
+    "last 2 versions",
+    "Firefox ESR"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^8.2.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chalk": "^2.3.2",
+    "cross-env": "^5.1.4",
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-changed": "^3.2.0",
+    "gulp-if": "^2.0.2",
+    "gulp-iife": "^0.3.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "gulp-zip": "^4.1.0",
+    "jshint": "^2.9.5"
+  }
+}
