@@ -26,19 +26,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The absolute URL to this file **WITH trailing slash**.
  * Used when requesting assets.
  */
-defined( 'DSCW_COUNTDOWN_TIMER_URL' ) ?: define( 'DSCW_COUNTDOWN_TIMER_URL', plugin_dir_url( __FILE__ ) );
+if ( ! defined( 'DSCW_COUNTDOWN_TIMER_URL' ) ) {
+	define( 'DSCW_COUNTDOWN_TIMER_URL', plugin_dir_url( __FILE__ ) );
+}
 
 /**
  * The absolute filesystem directory path to this file **WITH trailing slash**.
  * Used when including PHP files
  */
-defined( 'DSCW_COUNTDOWN_TIMER_PATH' ) ?: define( 'DSCW_COUNTDOWN_TIMER_PATH', plugin_dir_path( __FILE__ ) );
+if ( ! defined( 'DSCW_COUNTDOWN_TIMER_PATH' ) ) {
+	define( 'DSCW_COUNTDOWN_TIMER_PATH', plugin_dir_path( __FILE__ ) );
+}
 
 /**
  * The current version of the plugin.
  * Used to cache bust assets and check for available features.
  */
-defined( 'DSCW_VERSION' ) ?: define( 'DSCW_VERSION', '2.0.0' );
+if( ! defined( 'DSCW_VERSION' ) ) {
+	define( 'DSCW_VERSION', '2.0.0' );
+}
 
 /**
  * Register CountDown widget class
