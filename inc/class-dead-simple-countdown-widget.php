@@ -39,16 +39,55 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 		 */
 		public function form( $instance ) {
 
-			/* Saved values */
+			/**
+			 * Filter for modifying the widgets default theme.
+			 *
+			 * If this is a new instance and there is no theme set this filter
+			 * allows you to set the default selected theme option. The returned
+			 * value must be a string matching a theme key in the $available_themes array.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string 'light' Default theme key.
+			 */
+			$default_theme = apply_filters( 'dscw_default_widget_theme', 'light' );
+
+			$active_theme = ! empty( $instance['theme'] ) ? $instance['theme'] : $default_theme;
 
 			$title_text   = ! empty( $instance['title_text'] ) ? $instance['title_text'] : '';
 			$end_date     = ! empty( $instance['end_date'] ) ? $instance['end_date'] : '';
 			$end_date_ms  = ! empty( $instance['end_date_ms'] ) ? $instance['end_date_ms'] : '';
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
-			// If no theme is set default to "light".
-			$theme = ! empty( $instance['theme'] ) ? $instance['theme'] : 'light';
 
-			ob_start();
+			$available_themes = array(
+				'light' => 'Light',
+				'dark'  => 'Dark',
+				'none'  => 'None',
+			);
+
+			/**
+			 * Filter for modifying available theme choices in the widget form.
+			 *
+			 * The value passed is an associative array consisting $keys specifying
+			 * the name of the theme and $values specifying the user-facing label text.
+			 * $keys are passed through `esc_attr()` so the should not contain <, >, &, ” or ‘
+			 * $values are passed through `esc_html()`. An example of a well formatted theme
+			 * option would be:
+			 *        $available_themes['my-awesome-theme'] = 'My Awesome Theme';
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param array $available_themes Associative array in the shape of 'theme-key' => 'Label'.
+			 */
+			$available_themes = apply_filters( 'dscw_available_widget_themes', $available_themes );
+
+			$theme_options = '';
+			foreach ( $available_themes as $theme_key => $label ) {
+				$theme_key      = esc_attr( $theme_key );
+				$theme_options .= '<option value="' . $theme_key . '" ' . ( ( $theme_key === $active_theme ) ? 'selected' : '' ) . '>'
+								  . esc_html( $label ) .
+								  '</option>';
+			}
 			?>
 			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'title_text' ) ); ?>">Title:</label>
@@ -61,10 +100,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			<div>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>">Theme:</label>
 				<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"
-						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>">
-					<option value="light" <?php echo 'light' === $theme ? 'selected' : ''; ?>>Light</option>
-					<option value="dark" <?php echo 'dark' === $theme ? 'selected' : ''; ?>>Dark</option>
-					<option value="none"<?php echo 'none' === $theme ? 'selected' : ''; ?>>None</option>
+						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>"
+				>
+					<?php echo $theme_options; // WPCS: XSS ok. All input is escaped when the string is constructed. ?>
 				</select>
 			</div>
 			<hr>
@@ -75,11 +113,11 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 						   name="<?php echo esc_attr( $this->get_field_name( 'end_date' ) ); ?>"
 						   value="<?php echo esc_attr( $end_date ); ?>"
 						   onclick="jQuery(this).datepicker({
-								   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
-								   altFormat: '@' // Unix timestamp (ms since 01/01/1970).
-								   });
-								   jQuery(this).datepicker('show');
-								   "
+							   altField: '#<?php echo esc_js( $this->get_field_id( 'end_date_ms' ) ); ?>',
+							   altFormat: '@' // Unix timestamp (ms since 01/01/1970).
+							   });
+							   jQuery(this).datepicker('show');
+							   "
 					/>
 					<span style="display: block; font-size: 0.9em; margin-top: 4px; color: #656572;">
 						Date to count down to.
@@ -105,7 +143,6 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			</div>
 
 			<?php
-			echo ob_get_clean();
 		}
 
 		/**
@@ -143,6 +180,18 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			wp_enqueue_script( 'dead-simple-countdown-widget-js' );
 			wp_enqueue_style( 'dead-simple-countdown-widget-styles' );
 
+			/**
+			 * Action fired when frontend rendering starts.
+			 *
+			 * This is a great place to enqueue any custom theme CSS.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string $instance['theme']    Currently selected theme key.
+			 * @param string $this->id             Unique ID string of the current instance (id_base-number).
+			 */
+			do_action( 'dscw_start_widget_render', $instance['theme'], $this->id );
+
 			// UNIX timestamp in milliseconds of the date the countdown is set to expire.
 			$end_date_ms = $instance['end_date_ms'];
 			// Text to display when countdown expires.
@@ -151,29 +200,44 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			// Check if we are using a theme and set the CSS class accordingly.
 			switch ( $instance['theme'] ) {
 				case 'light':
-					$theme_class = 'dscw-countdown-theme-light';
+					$container_class = 'dscw-countdown-theme-light ';
 					break;
 				case 'dark':
-					$theme_class = 'dscw-countdown-theme-dark';
+					$container_class = 'dscw-countdown-theme-dark ';
 					break;
 				default:
-					$theme_class = '';
+					$container_class = '';
 					break;
 			}
 
+			/**
+			 * Filter for modifying the HTML class attribute applied to the primary widget container.
+			 *
+			 * Allows modifying the class names added to this instance's container element.
+			 * Built in themes add a class to this element that's used as the root CSS selector.
+			 * Be sure to only append to $container_class if you do not want to overwrite the built in theme classes.
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param string $container_class      Class name to be added to timer's container element.
+			 * @param string $instance['theme']    Currently selected theme key.
+			 * @param string $this->id             Unique ID string of the current instance (id_base-number).
+			 */
+			$container_class = apply_filters( 'dscw_container_element_class_attribute', $container_class, $instance['theme'], $this->id );
+
 			// If a theme is set then add an class for inner wrap.
-			$inner_theme_class = $theme_class ? 'dscw-countdown-theme-inner' : '';
+			$inner_theme_class = $container_class ? 'dscw-countdown-theme-inner' : '';
 
 			$content = '';
 			// Primary container element. This will carry our options to the front-end via data attributes.
 			$content .= '<div 
-		                class="dscw-countdown-instance ' . esc_attr( $theme_class ) . '" 
+		                class="dscw-countdown-instance ' . esc_attr( $container_class ) . '" 
 		                data-instance="' . esc_attr( $this->id ) . '" 
 		                data-end-date="' . esc_attr( $end_date_ms ) . '" 
 		                data-expired-text="' . esc_attr( $expired_text ) . '"
 		             >';
 
-			// Inner theme wrapper. This class is empty when $theme_class is empty.
+			// Inner theme wrapper. This class is empty when $container_class is empty.
 			$content .= '<div class="' . esc_attr( $inner_theme_class ) . '">';
 
 			// Only add title if it's set.
@@ -190,7 +254,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$output = $args['before_widget'] . $content . $args['after_widget'];
 
 			// Echo out rendered HTML.
-			echo $output;
+			echo $output; // WPCS: XSS ok. We don't need PHPCS to yell at us here because we escape everything above.
 		}
 	}
 }

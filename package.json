@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "gulp clean",
     "lint": "gulp lint",
-    "watch": "gulp clean && gulp watch",
+    "watch": "gulp clean && cross-env NODE_ENV=development gulp watch",
     "dev": "gulp clean && cross-env NODE_ENV=development gulp",
     "prod": "gulp clean && cross-env NODE_ENV=production gulp",
     "bundle": "gulp clean && cross-env NODE_ENV=production BUILD_TYPE=release gulp bundle"
