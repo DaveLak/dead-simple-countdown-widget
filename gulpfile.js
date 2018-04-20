@@ -14,6 +14,7 @@ var zip = require('gulp-zip');
 
 /*Linting tools*/
 var jshint = require('gulp-jshint');
+var gulpStylelint = require('gulp-stylelint');
 
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
@@ -96,7 +97,7 @@ gulp.task('scripts', ['lint-scripts'], function () {
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', ['lint-css'], function () {
 	var plugins = [
 		autoprefixer(),
 		cssnano({zindex: false})
@@ -155,12 +156,21 @@ gulp.task('watch', ['assets'], function () {
 /************************
  *    Linting
  *************************/
-gulp.task('lint', ['lint-scripts']);
+gulp.task('lint', ['lint-scripts', 'lint-css']);
 
 gulp.task('lint-scripts', function () {
 	return gulp.src(PATHS.scripts.src)
 		.pipe(jshint())
 		.pipe(notify(jsHintReporter));
+});
+
+gulp.task('lint-css', function () {
+	return gulp.src(PATHS.styles.src.concat(['!**/jquery-ui-*']))
+		.pipe(gulpStylelint({
+			reporters: [
+				{formatter: 'string', console: true}
+			]
+		}));
 });
 
 /*************************
