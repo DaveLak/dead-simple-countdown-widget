@@ -1,4 +1,6 @@
 'use strict';
+/*eslint  space-in-parens: 0, array-bracket-spacing: 0, yoda: 0 */
+
 /* Node standard libs and other utilities */
 var path = require('path');
 var del = require('del');
