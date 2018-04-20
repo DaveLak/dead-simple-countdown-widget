@@ -9,12 +9,11 @@ var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
 var changed = require('gulp-changed');
-var notify = require('gulp-notify');
 var zip = require('gulp-zip');
 
 /*Linting tools*/
-var jshint = require('gulp-jshint');
-var gulpStylelint = require('gulp-stylelint');
+var stylelint = require('gulp-stylelint');
+var eslint = require('gulp-eslint');
 
 /* Asset modifiers */
 var sourcemaps = require('gulp-sourcemaps');
@@ -159,14 +158,14 @@ gulp.task('watch', ['assets'], function () {
 gulp.task('lint', ['lint-scripts', 'lint-css']);
 
 gulp.task('lint-scripts', function () {
-	return gulp.src(PATHS.scripts.src)
-		.pipe(jshint())
-		.pipe(notify(jsHintReporter));
+	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
+		.pipe(eslint())
+		.pipe(eslint.format());
 });
 
 gulp.task('lint-css', function () {
 	return gulp.src(PATHS.styles.src.concat(['!**/jquery-ui-*']))
-		.pipe(gulpStylelint({
+		.pipe(stylelint({
 			reporters: [
 				{formatter: 'string', console: true}
 			]
@@ -199,16 +198,4 @@ function styleEventText(eventType) {
 		case 'deleted':
 			return chalk.red.underline(eventType);
 	}
-}
-
-function jsHintReporter(file) {
-	if (file.jshint.success) {
-		return false;
-	}
-	var errors = file.jshint.results.map(function (data) {
-		if (data.error) {
-			return '(' + data.error.line + ':' + data.error.character + ') ' + data.error.reason;
-		}
-	}).join('\n');
-	return file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors;
 }
