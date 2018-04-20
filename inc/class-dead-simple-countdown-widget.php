@@ -83,7 +83,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			$theme_options = '';
 			foreach ( $available_themes as $theme_key => $label ) {
-				$theme_key     = esc_attr( $theme_key );
+				$theme_key      = esc_attr( $theme_key );
 				$theme_options .= '<option value="' . $theme_key . '" ' . ( ( $theme_key === $active_theme ) ? 'selected' : '' ) . '>'
 								  . esc_html( $label ) .
 								  '</option>';
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 				<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"
 						name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>"
 				>
-					<?php echo $theme_options ?>
+					<?php echo $theme_options; // WPCS: XSS ok. All input is escaped when the string is constructed. ?>
 				</select>
 			</div>
 			<hr>
@@ -254,7 +254,7 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$output = $args['before_widget'] . $content . $args['after_widget'];
 
 			// Echo out rendered HTML.
-			echo $output;
+			echo $output; // WPCS: XSS ok. We don't need PHPCS to yell at us here because we escape everything above.
 		}
 	}
 }
