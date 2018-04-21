@@ -42,7 +42,7 @@ if ( ! defined( 'DSCW_COUNTDOWN_TIMER_PATH' ) ) {
  * The current version of the plugin.
  * Used to cache bust assets and check for available features.
  */
-if( ! defined( 'DSCW_VERSION' ) ) {
+if ( ! defined( 'DSCW_VERSION' ) ) {
 	define( 'DSCW_VERSION', '2.0.0' );
 }
 
