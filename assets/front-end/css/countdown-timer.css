@@ -1,72 +1,72 @@
 .dscw-countdown-instance {
-    text-align: center;
-    padding: 2px;
-    border-radius: 2px;
+	text-align: center;
+	padding: 2px;
+	border-radius: 2px;
 }
 
 .dscw-countdown-instance h3 {
-    margin: 0;
+	margin: 0;
 }
 
 .dscw-countdown-timer-box-container {
-    border-radius: 3px;
+	border-radius: 3px;
 }
 
 .dscw-countdown-timer-box {
-    font-weight: bold;
-    margin: 15px auto;
+	font-weight: 600;
+	margin: 15px auto;
 }
 
 .dscw-countdown-timer-box .dscw-countdown-timer-box-items {
-    display: inline-block;
-    margin: 5px;
-    padding-bottom: 0;
+	display: inline-block;
+	margin: 5px;
+	padding-bottom: 0;
 }
 
 /* ============ Themes ============ */
 .dscw-countdown-theme-inner {
-    padding: 10px 7px 0 7px;
-    border-radius: 5px;
+	padding: 10px 7px 0 7px;
+	border-radius: 5px;
 }
 
 /* Light Theme */
 .dscw-countdown-theme-light {
-    color: #086788;
+	color: #086788;
 }
 
 .dscw-countdown-theme-light .dscw-countdown-theme-inner {
-    background-color: #fafafa;
-    border: solid 3px #06aed5;
+	background-color: #fafafa;
+	border: solid 3px #06aed5;
 }
 
 .dscw-countdown-theme-light .dscw-countdown-timer-box {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color:  #06aed5;
-    padding: 4px 0;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	border-color: #06aed5;
+	padding: 4px 0;
 }
 
 .dscw-countdown-theme-light .dscw-countdown-expired-text {
-    color: #dd1c1a;
+	color: #dd1c1a;
 }
 
 /* Dark Theme */
 .dscw-countdown-theme-dark {
-    color: #fafafa;
+	color: #fafafa;
 }
 
 .dscw-countdown-theme-dark .dscw-countdown-theme-inner {
-    background-color: #0c0c0c;
-    border: solid 3px #fafafa;
+	background-color: #0c0c0c;
+	border: solid 3px #fafafa;
 }
 
 .dscw-countdown-theme-dark .dscw-countdown-timer-box {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: #fafafa;
-    padding: 4px 0;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	border-color: #fafafa;
+	padding: 4px 0;
 }
 
 .dscw-countdown-theme-dark .dscw-countdown-expired-text {
-    color: #dd1c1a;
+	color: #dd1c1a;
 }

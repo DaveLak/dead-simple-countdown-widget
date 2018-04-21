@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "clean": "gulp clean",
-    "lint": "gulp lint",
+    "lint": "cross-env NODE_ENV=development gulp lint",
+    "lint-fix": "cross-env NODE_ENV=development BUILD_TYPE=fix gulp lint",
     "watch": "gulp clean && cross-env NODE_ENV=development gulp watch",
     "dev": "gulp clean && cross-env NODE_ENV=development gulp",
     "prod": "gulp clean && cross-env NODE_ENV=production gulp",

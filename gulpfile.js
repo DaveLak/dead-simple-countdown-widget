@@ -27,12 +27,12 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
-// True if $NODE_ENV is set to anything except'production'.
+/* Environment dependent booleans */
 var isDevelopment = (process.env.NODE_ENV !== 'production');
-
-// True when we should build create a release package.
 var isRelease = (process.env.BUILD_TYPE === 'release');
+var isFix = (process.env.BUILD_TYPE === 'fix');
 
+/* Other vars */
 // Name of the plugin, used in file and directory names.
 var PLUGIN_NAME = 'dead-simple-countdown-widget';
 
@@ -73,7 +73,7 @@ var PATHS = {
  *********************/
 
 // Remove built directories so we can start fresh.
-gulp.task('clean', function () {
+gulp.task('clean', function() {
 	return del([
 		RELEASE_DIR,
 		PATHS.scripts.dest,
@@ -82,7 +82,7 @@ gulp.task('clean', function () {
 	]);
 });
 
-gulp.task('scripts', ['lint-scripts'], function () {
+gulp.task('scripts', ['lint-scripts'], function() {
 	return gulp.src(PATHS.scripts.src)
 		.pipe(changed(PATHS.scripts.dest))
 		.pipe(gulp.dest(PATHS.scripts.dest))
@@ -98,7 +98,7 @@ gulp.task('scripts', ['lint-scripts'], function () {
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
 
-gulp.task('styles', ['lint-css'], function () {
+gulp.task('styles', ['lint-css'], function() {
 	var plugins = [
 		autoprefixer(),
 		cssnano({zindex: false})
@@ -113,14 +113,14 @@ gulp.task('styles', ['lint-css'], function () {
 		.pipe(gulp.dest(PATHS.styles.dest));
 });
 
-gulp.task('images', function () {
+gulp.task('images', function() {
 	return gulp.src(PATHS.images.src)
 		.pipe(changed(PATHS.images.dest))
 		.pipe(gulpif((false === isDevelopment), imagemin()))
 		.pipe(gulp.dest(PATHS.images.dest));
 });
 
-gulp.task('php', function () {
+gulp.task('php', function() {
 	return gulp.src(PATHS.php.src)
 		.pipe(changed(PATHS.php.dest))
 		.pipe(gulp.dest(PATHS.php.dest));
@@ -129,24 +129,24 @@ gulp.task('php', function () {
 /*********************
  *  Watch
  * *******************/
-gulp.task('watch', ['assets'], function () {
+gulp.task('watch', ['assets'], function() {
 	var scriptWatcher = gulp.watch(PATHS.scripts.src, ['scripts']);
 	var styleWatcher = gulp.watch(PATHS.styles.src, ['styles']);
 	var imageWatcher = gulp.watch(PATHS.images.src, ['images']);
 
-	scriptWatcher.on('change', function (event) {
+	scriptWatcher.on('change', function(event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "scripts".'
 		);
 	});
-	styleWatcher.on('change', function (event) {
+	styleWatcher.on('change', function(event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "styles".'
 		);
 	});
-	imageWatcher.on('change', function (event) {
+	imageWatcher.on('change', function(event) {
 		console.log(
 			'File ' + chalk.blue.bold(path.basename(event.path)) +
 			' was ' + styleEventText(event.type) + ', running task "images".'
@@ -159,26 +159,32 @@ gulp.task('watch', ['assets'], function () {
  *************************/
 gulp.task('lint', ['lint-scripts', 'lint-css']);
 
-gulp.task('lint-scripts', function () {
+gulp.task('lint-scripts', function() {
 	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
-		.pipe(eslint())
-		.pipe(eslint.format());
+		.pipe(eslint({
+			fix: isFix
+		}))
+		.pipe(eslint.format())
+		.pipe(gulpif(isFix, gulp.dest('./assets')));
 });
 
-gulp.task('lint-css', function () {
+gulp.task('lint-css', function() {
 	return gulp.src(PATHS.styles.src.concat(['!**/jquery-ui-*']))
 		.pipe(stylelint({
 			reporters: [
 				{formatter: 'string', console: true}
-			]
-		}));
+			],
+			fix: isFix,
+			failAfterError: false
+		}))
+		.pipe(gulpif(isFix, gulp.dest('./assets')));
 });
 
 /*************************
  * Packaging for release *
  *************************/
 // Builds all plugin files to path defined in `RELEASE_DIR`
-gulp.task('bundle', ['assets', 'php'], function () {
+gulp.task('bundle', ['assets', 'php'], function() {
 	return gulp.src([RELEASE_DIR + '/**/*', '!*.zip'])
 		.pipe(zip(PLUGIN_NAME + '.zip'))
 		.pipe(gulp.dest(RELEASE_DIR));
