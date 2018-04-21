@@ -27,12 +27,12 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
-// True if $NODE_ENV is set to anything except'production'.
+/* Environment dependent booleans */
 var isDevelopment = (process.env.NODE_ENV !== 'production');
-
-// True when we should build create a release package.
 var isRelease = (process.env.BUILD_TYPE === 'release');
+var isFix = (process.env.BUILD_TYPE === 'fix');
 
+/* Other vars */
 // Name of the plugin, used in file and directory names.
 var PLUGIN_NAME = 'dead-simple-countdown-widget';
 
@@ -161,8 +161,11 @@ gulp.task('lint', ['lint-scripts', 'lint-css']);
 
 gulp.task('lint-scripts', function () {
 	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
-		.pipe(eslint())
-		.pipe(eslint.format());
+		.pipe(eslint({
+			fix: isFix
+		}))
+		.pipe(eslint.format())
+		.pipe(gulpif(isFix, gulp.dest('./assets')));
 });
 
 gulp.task('lint-css', function () {
@@ -170,8 +173,11 @@ gulp.task('lint-css', function () {
 		.pipe(stylelint({
 			reporters: [
 				{formatter: 'string', console: true}
-			]
-		}));
+			],
+			fix: isFix,
+			failAfterError: false
+		}))
+		.pipe(gulpif(isFix, gulp.dest('./assets')));
 });
 
 /*************************
