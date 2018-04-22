@@ -5,6 +5,9 @@ php:
 
 install:
   - composer install
+  - nvm install && nvm use
+  - yarn install
 
 script:
   - composer run-script phpcs
+  - yarn lint
