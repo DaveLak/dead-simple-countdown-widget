@@ -193,6 +193,7 @@ gulp.task('package', ['assets', 'php'], function() {
 
 gulp.task('assets', ['images', 'styles', 'scripts']);
 
+gulp.task('build', ['assets']);
 gulp.task('default', ['assets']);
 
 /****************
