@@ -17,3 +17,9 @@ script:
   - gulp lint-scripts --strict
   - gulp lint-css --strict
   - gulp clean && gulp build --production
+
+branches:
+  only:
+    - master
+    - dev
+    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
