@@ -13,7 +13,7 @@
 }
 
 .dscw-countdown-timer-box {
-	font-weight: 600
+	font-weight: 600;
 	margin: 15px auto;
 }
 
@@ -25,7 +25,7 @@
 
 /* ============ Themes ============ */
 .dscw-countdown-theme-inner {
-  padding: 10px 7px 0 7px;
+	padding: 10px 7px 0 7px;
 	border-radius: 5px;
 }
 

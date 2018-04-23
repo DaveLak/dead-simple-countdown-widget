@@ -251,10 +251,10 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$content .= '</div>'; // Close inner theme wrapper.
 			$content .= '</div>'; // Close primary container.
 
-			$output = $args['before_widget'] . $content . $args['after_widget']
+			$output = $args['before_widget'] . $content . $args['after_widget'];
 
 			// Echo out rendered HTML.
-			echo $output; //  ok. We don't need PHPCS to yell at us here because we escape everything above.
+			echo $output; // WPCS: XSS ok. We don't need PHPCS to yell at us here because we escape everything above.
 		}
 	}
 }

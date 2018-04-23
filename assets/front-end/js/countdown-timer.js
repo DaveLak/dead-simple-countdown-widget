@@ -119,7 +119,7 @@ var CountDownTimer = ( function() {
 		// Set the countdown to run every second and return `intervalID` for this timer
 		return this.timer = setInterval( function() {
 			self.showRemainingTime();
-		}, 1000 )
+		}, 1000 );
 	};
 
 	/**
