@@ -5,6 +5,7 @@
 var path = require('path');
 var del = require('del');
 var chalk = require('chalk');
+var argv = require('yargs').argv;
 
 /* Gulp and Gulp Utilities */
 var gulp = require('gulp');
@@ -27,12 +28,9 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
-/* Environment dependent booleans */
-var isDevelopment = (process.env.NODE_ENV !== 'production');
-var isRelease = (process.env.BUILD_TYPE === 'release');
-var isFix = (process.env.BUILD_TYPE === 'fix');
+// True if `--production`, `-p`, or `--release` arguments are passed.
+var isProductionBuild = ( true === (argv.production || argv.p || argv.release));
 
-/* Other vars */
 // Name of the plugin, used in file and directory names.
 var PLUGIN_NAME = 'dead-simple-countdown-widget';
 
@@ -40,7 +38,7 @@ var PLUGIN_NAME = 'dead-simple-countdown-widget';
 var RELEASE_DIR = './release';
 
 // Directory where files get written to.
-var OUT_DIR = isRelease ? RELEASE_DIR + '/' + PLUGIN_NAME + '/' : './';
+var OUT_DIR = argv.release ? RELEASE_DIR + '/' + PLUGIN_NAME + '/' : './';
 
 // Read/Write paths of files.
 var PATHS = {
@@ -94,7 +92,7 @@ gulp.task('scripts', ['lint-scripts'], function() {
 		}))
 		.pipe(uglifyJS())
 		.pipe(rename({suffix: '.min'}))
-		.pipe(sourcemaps.write({addComment: isDevelopment}))
+		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)}))
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
 
@@ -109,14 +107,14 @@ gulp.task('styles', ['lint-css'], function() {
 		.pipe(sourcemaps.init())
 		.pipe(postcss(plugins))
 		.pipe(rename({suffix: '.min'}))
-		.pipe(sourcemaps.write({addComment: isDevelopment}))
+		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)}))
 		.pipe(gulp.dest(PATHS.styles.dest));
 });
 
 gulp.task('images', function() {
 	return gulp.src(PATHS.images.src)
 		.pipe(changed(PATHS.images.dest))
-		.pipe(gulpif((false === isDevelopment), imagemin()))
+		.pipe(gulpif(isProductionBuild, imagemin()))
 		.pipe(gulp.dest(PATHS.images.dest));
 });
 
@@ -162,10 +160,12 @@ gulp.task('lint', ['lint-scripts', 'lint-css']);
 gulp.task('lint-scripts', function() {
 	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
 		.pipe(eslint({
-			fix: isFix
+			fix: argv.fix
 		}))
 		.pipe(eslint.format())
-		.pipe(gulpif(isFix, gulp.dest('./assets')));
+		.pipe(gulpif((argv.strict || isProductionBuild), eslint.failAfterError()))
+		.on('error', handleError)
+		.pipe(gulpif(argv.fix, gulp.dest('./assets')));
 });
 
 gulp.task('lint-css', function() {
@@ -174,17 +174,18 @@ gulp.task('lint-css', function() {
 			reporters: [
 				{formatter: 'string', console: true}
 			],
-			fix: isFix,
-			failAfterError: false
+			fix: argv.fix,
+			failAfterError: (argv.strict || isProductionBuild)
 		}))
-		.pipe(gulpif(isFix, gulp.dest('./assets')));
+		.on('error', handleError)
+		.pipe(gulpif(argv.fix, gulp.dest('./assets')));
 });
 
 /*************************
  * Packaging for release *
  *************************/
 // Builds all plugin files to path defined in `RELEASE_DIR`
-gulp.task('bundle', ['assets', 'php'], function() {
+gulp.task('package', ['assets', 'php'], function() {
 	return gulp.src([RELEASE_DIR + '/**/*', '!*.zip'])
 		.pipe(zip(PLUGIN_NAME + '.zip'))
 		.pipe(gulp.dest(RELEASE_DIR));
@@ -192,6 +193,7 @@ gulp.task('bundle', ['assets', 'php'], function() {
 
 gulp.task('assets', ['images', 'styles', 'scripts']);
 
+gulp.task('build', ['assets']);
 gulp.task('default', ['assets']);
 
 /****************
@@ -206,4 +208,9 @@ function styleEventText(eventType) {
 		case 'deleted':
 			return chalk.red.underline(eventType);
 	}
+}
+
+function handleError(err) {
+	console.log(err.toString());
+	process.exit(1);
 }

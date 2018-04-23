@@ -8,12 +8,11 @@
   "private": true,
   "scripts": {
     "clean": "gulp clean",
-    "lint": "cross-env NODE_ENV=development gulp lint",
-    "lint-fix": "cross-env NODE_ENV=development BUILD_TYPE=fix gulp lint",
-    "watch": "gulp clean && cross-env NODE_ENV=development gulp watch",
-    "dev": "gulp clean && cross-env NODE_ENV=development gulp",
-    "prod": "gulp clean && cross-env NODE_ENV=production gulp",
-    "bundle": "gulp clean && cross-env NODE_ENV=production BUILD_TYPE=release gulp bundle"
+    "lint": "gulp lint",
+    "lint-fix": "gulp lint --fix",
+    "watch": "gulp clean && gulp watch",
+    "build": "gulp clean && gulp",
+    "package": "gulp clean && gulp package --release"
   },
   "browserslist": [
     "> 5%",
@@ -23,12 +22,14 @@
   "eslintConfig": {
     "extends": "wordpress"
   },
+  "stylelint": {
+    "extends": "stylelint-config-wordpress"
+  },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "chalk": "^2.3.2",
-    "cross-env": "^5.1.4",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
@@ -47,6 +48,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-zip": "^4.1.0",
     "stylelint": "^9.2.0",
-    "stylelint-config-wordpress": "^13.0.0"
+    "stylelint-config-wordpress": "^13.0.0",
+    "yargs": "^11.0.0"
   }
 }
