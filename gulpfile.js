@@ -5,6 +5,7 @@
 var path = require('path');
 var del = require('del');
 var chalk = require('chalk');
+var argv = require('yargs').argv;
 
 /* Gulp and Gulp Utilities */
 var gulp = require('gulp');
@@ -28,9 +29,8 @@ var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 
 /* Environment dependent booleans */
-var isDevelopment = (process.env.NODE_ENV !== 'production');
-var isRelease = (process.env.BUILD_TYPE === 'release');
-var isFix = (process.env.BUILD_TYPE === 'fix');
+var isDevelopment = ((true !== argv.production) || (true !== argv.p));
+var isRelease = (true === argv.release);
 
 /* Other vars */
 // Name of the plugin, used in file and directory names.
@@ -162,10 +162,12 @@ gulp.task('lint', ['lint-scripts', 'lint-css']);
 gulp.task('lint-scripts', function() {
 	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
 		.pipe(eslint({
-			fix: isFix
+			fix: argv.fix
 		}))
 		.pipe(eslint.format())
-		.pipe(gulpif(isFix, gulp.dest('./assets')));
+		.pipe(gulpif(argv.strict, eslint.failAfterError()))
+		.on('error', handleError)
+		.pipe(gulpif(argv.fix, gulp.dest('./assets')));
 });
 
 gulp.task('lint-css', function() {
@@ -174,10 +176,11 @@ gulp.task('lint-css', function() {
 			reporters: [
 				{formatter: 'string', console: true}
 			],
-			fix: isFix,
-			failAfterError: false
+			fix: argv.fix,
+			failAfterError: argv.strict
 		}))
-		.pipe(gulpif(isFix, gulp.dest('./assets')));
+		.on('error', handleError)
+		.pipe(gulpif(argv.fix, gulp.dest('./assets')));
 });
 
 /*************************
@@ -206,4 +209,9 @@ function styleEventText(eventType) {
 		case 'deleted':
 			return chalk.red.underline(eventType);
 	}
+}
+
+function handleError(err) {
+	console.log(err.toString());
+	process.exit(1);
 }
