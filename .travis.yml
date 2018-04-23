@@ -10,10 +10,10 @@ install:
   - yarn install
 
 before_script:
-  - yarn global add gulp-cli
+  - yarn global add gulp-cli@2.0.1
 
 script:
   - composer run-script phpcs
   - gulp lint-scripts --strict
   - gulp lint-css --strict
-  - gulp
+  - yarn run build --production
