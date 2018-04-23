@@ -1,11 +1,18 @@
 .dscw-countdown-instance {
-	text-align: center;
-	padding: 2px;
 	border-radius: 2px;
+	font-size: 16px;
+	padding: 2px;
+	text-align: center;
 }
 
 .dscw-countdown-instance h3 {
+	font-size: 1.4em;
 	margin: 0;
+}
+
+.dscw-countdown-instance h4 {
+	font-size: 1.2em;
+	margin: 0.8em auto;
 }
 
 .dscw-countdown-timer-box-container {
@@ -40,9 +47,9 @@
 }
 
 .dscw-countdown-theme-light .dscw-countdown-timer-box {
-	border-top: 1px solid;
 	border-bottom: 1px solid;
 	border-color: #06aed5;
+	border-top: 1px solid;
 	padding: 4px 0;
 }
 
@@ -61,9 +68,9 @@
 }
 
 .dscw-countdown-theme-dark .dscw-countdown-timer-box {
-	border-top: 1px solid;
 	border-bottom: 1px solid;
 	border-color: #fafafa;
+	border-top: 1px solid;
 	padding: 4px 0;
 }
 
