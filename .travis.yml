@@ -17,4 +17,3 @@ script:
   - gulp lint-scripts --strict
   - gulp lint-css --strict
   - gulp clean && gulp build --production
-  - gulp clean && gulp package --release

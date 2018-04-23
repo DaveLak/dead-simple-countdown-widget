@@ -116,10 +116,10 @@ var CountDownTimer = ( function() {
 		this.numberTransition( this.$numberMinutes, this.minutes );
 		this.numberTransition( this.$numberSeconds, this.seconds );
 
-		// Set the countdown to run every second and return `intervalID` for this timer.
+		// Set the countdown to run every second and return `intervalID` for this timer
 		return this.timer = setInterval( function() {
 			self.showRemainingTime();
-		}, 1000 );
+		}, 1000 )
 	};
 
 	/**
