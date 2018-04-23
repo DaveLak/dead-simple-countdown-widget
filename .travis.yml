@@ -4,6 +4,11 @@ language: php
 php:
   - '7.0'
 
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
+
 install:
   - composer install
   - nvm install && nvm use
