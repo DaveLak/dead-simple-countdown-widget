@@ -35,7 +35,7 @@ var CountDownTimer = ( function() {
 		 * @since 1.0.0
 		 * @type {jQuery}
 		 */
-		this.$mountNode = settings.$mountNode;
+		this.$mountNode = this.validateMountNode( settings.$mountNode );
 
 		/**
 		 * Unique ID of this widget instance.
@@ -43,7 +43,7 @@ var CountDownTimer = ( function() {
 		 * @since 1.0.0
 		 * @type {string}
 		 */
-		this.instanceID = settings.instanceID;
+		this.instanceID = this.validateInstanceID( settings.instanceID );
 
 		/**
 		 * Text displayed when countdown finishes.
@@ -51,7 +51,7 @@ var CountDownTimer = ( function() {
 		 * @since 1.0.0
 		 * @type {string}
 		 */
-		this.expiredText = settings.expiredText;
+		this.expiredText = settings.expiredText || '';
 
 		/**
 		 * UNIX timestamp in milliseconds of the date the countdown is set to expire.
@@ -59,7 +59,7 @@ var CountDownTimer = ( function() {
 		 * @since 1.0.0
 		 * @type {(number|string)}
 		 */
-		this.targetDate = settings.endDate;
+		this.targetDate = settings.targetDate || 0;
 
 		// Countdown container element.
 		this.$countDownBox = null;
@@ -70,17 +70,55 @@ var CountDownTimer = ( function() {
 		this.$numberMinutes = null;
 		this.$numberSeconds = null;
 
-		// Initialize time remaining to 0.
-		this.days = 0;
-		this.hours = 0;
-		this.minutes = 0;
-		this.seconds = 0;
-
+		this.remaining = {
+			days: 0,
+			hours: 0,
+			minutes: 0,
+			seconds: 0
+		};
 	}
 
 	/***********************
 	 *  Prototype Methods  *
 	 ***********************/
+
+	/**
+	 * Validates `settings.$mountNode`.
+	 *
+	 * Makes sure `settings.$mountNode` A jQuery object representing a single DOM node.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param {string} $mountNode - jQuery object representing the single DOM node to add the timer to.
+	 *
+	 * @throws {Error} - Passed argument must be a jQuery object wrapping a single element.
+	 * @return {jQuery} - Valid jQuery object representing the DOM node the timer is added to.
+	 */
+	CountDownTimer.prototype.validateMountNode = function( $mountNode ) {
+		if ( $mountNode instanceof jQuery && 1 === $mountNode.length ) {
+			return $mountNode;
+		}
+		throw new Error( '[CountDownTimer] settings.$mountNode must be a jQuery object wrapping a single element!' );
+	};
+
+	/**
+	 * Validates `settings.instanceID`.
+	 *
+	 * Makes sure `settings.instanceID` is a string with a length greater than 0.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param {string} instanceID - Identifier for this widget instance.
+	 *
+	 * @throws {Error} - Passed argument must be a string with a length greater than 0.
+	 * @return {string} - `instanceID` of the timer or `0` if the timer already expired.
+	 */
+	CountDownTimer.prototype.validateInstanceID = function( instanceID ) {
+		if ( ( 'string' === typeof instanceID || instanceID instanceof String ) && 0 < instanceID.length ) {
+			return instanceID;
+		}
+		throw new Error( '[CountDownTimer] settings.instanceID must be a string with a length greater than 0!' );
+	};
 
 	/**
 	 * Starts the countdown widget instance.
@@ -111,10 +149,10 @@ var CountDownTimer = ( function() {
 		}
 
 		// Animate the transition of the numbers from 0 to remaining value
-		this.numberTransition( this.$numberDays, this.days );
-		this.numberTransition( this.$numberHours, this.hours );
-		this.numberTransition( this.$numberMinutes, this.minutes );
-		this.numberTransition( this.$numberSeconds, this.seconds );
+		this.numberTransition( this.$numberDays, this.remaining.days );
+		this.numberTransition( this.$numberHours, this.remaining.hours );
+		this.numberTransition( this.$numberMinutes, this.remaining.minutes );
+		this.numberTransition( this.$numberSeconds, this.remaining.seconds );
 
 		// Set the countdown to run every second and return `intervalID` for this timer
 		return this.timer = setInterval( function() {
@@ -135,7 +173,7 @@ var CountDownTimer = ( function() {
 
 		// Transition numbers from 0 to the final number
 		jQuery({numberCount: $element.text()}).animate({numberCount: endPoint}, {
-			duration: transitionDuration || 2000,
+			duration: transitionDuration || 3500,
 			step: function() {
 				$element.text( Math.floor( this.numberCount ) );
 			},
@@ -159,12 +197,12 @@ var CountDownTimer = ( function() {
 	CountDownTimer.prototype.calculateRemaining = function() {
 
 		// Time left until countdown expires
-		var timeRemaining = this.targetDate - new Date();
+		var timeRemaining = this.targetDate - Date.now();
 
-		this.days = Math.floor( timeRemaining / _DAY );
-		this.hours = Math.floor( ( timeRemaining % _DAY ) / _HOUR );
-		this.minutes = Math.floor( ( timeRemaining % _HOUR ) / _MINUTE );
-		this.seconds = Math.floor( ( timeRemaining % _MINUTE ) / _SECOND );
+		this.remaining.days = Math.floor( timeRemaining / _DAY );
+		this.remaining.hours = Math.floor( ( timeRemaining % _DAY ) / _HOUR );
+		this.remaining.minutes = Math.floor( ( timeRemaining % _HOUR ) / _MINUTE );
+		this.remaining.seconds = Math.floor( ( timeRemaining % _MINUTE ) / _SECOND );
 
 		return timeRemaining;
 	};
@@ -185,13 +223,11 @@ var CountDownTimer = ( function() {
 		// Check if there is still time left before the countdown expires
 		if ( 0 < this.calculateRemaining() ) {
 
-			// There is still time left
 			// Update the displayed numbers
-			this.$numberDays.text( this.days );
-			this.$numberHours.text( this.hours );
-			this.$numberMinutes.text( this.minutes );
-			this.$numberSeconds.text( this.seconds );
-
+			this.$numberDays.text( this.remaining.days );
+			this.$numberHours.text( this.remaining.hours );
+			this.$numberMinutes.text( this.remaining.minutes );
+			this.$numberSeconds.text( this.remaining.seconds );
 		}
 	};
 
@@ -204,17 +240,10 @@ var CountDownTimer = ( function() {
 	 * @param {(string|false)} [displayText=this.expiredText] - Text to replace numbers shown or `false` for no text.
 	 */
 	CountDownTimer.prototype.expireTimer = function( timer, displayText ) {
-
-		// If `timer` is null or undefined `timerID === this.timer`.
 		var timerID = ( null == timer ) ? this.timer : timer;
-
-		// If `displayText` is null or undefined `text === this.expiredText`.
 		var text = ( null == displayText ) ? this.expiredText : displayText;
 
-		// Stop updating the timer.
 		clearInterval( timerID );
-
-		// Replace numbers displayed with `text` if not falsey.
 		if ( text ) {
 			this.$countDownBox.html( '<h4 class="dscw-countdown-expired-text">' + text + '</h4>' );
 		}
@@ -245,7 +274,7 @@ var CountDownTimer = ( function() {
 			class: 'dscw-countdown-timer-box-container'
 		}).appendTo( this.$mountNode );
 
-		this.$countDownBox.html( '' +
+		this.$countDownBox.html(
 			'<ul class="dscw-countdown-timer-box">' +
 			'    <li class="dscw-countdown-timer-box-items dscw-countdown-days">' +
 			'       <div id="' + daysID + '" class="dscw-countdown-number">00</div>' +
@@ -287,11 +316,11 @@ jQuery( document ).ready( function() {
 
 	// Loop over each instance and set it's countdown clock
 	countdown.each( function() {
-		var instanceID = jQuery( this ).data( 'instance' );
+		var instanceID = jQuery( this ).attr( 'data-instance' );
 		var settings = {
 			instanceID: instanceID,
-			endDate: jQuery( this ).data( 'end-date' ),
-			expiredText: jQuery( this ).data( 'expired-text' ),
+			targetDate: jQuery( this ).attr( 'data-end-date' ),
+			expiredText: jQuery( this ).attr( 'data-expired-text' ),
 			$mountNode: jQuery( '#timer-mount-' + instanceID )
 		};
 		new CountDownTimer( settings ).start();
