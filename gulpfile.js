@@ -44,19 +44,22 @@ var OUT_DIR = argv.release ? RELEASE_DIR + '/' + PLUGIN_NAME + '/' : './';
 var PATHS = {
 	scripts: {
 		src: [
-			'./assets/**/js/*.js'
+			'./assets/**/js/*.js',
+			'!**/test/**'
 		],
 		dest: OUT_DIR + 'built/assets'
 	},
 	styles: {
 		src: [
-			'./assets/**/css/*.css'
+			'./assets/**/css/*.css',
+			'!**/test/**'
 		],
 		dest: OUT_DIR + 'built/assets'
 	},
 	images: {
 		src: [
-			'./assets/**/images/**/*.*(svg|png|jpg|jpeg|gif)'
+			'./assets/**/images/**/*.*(svg|png|jpg|jpeg|gif)',
+			'!**/test/**'
 		],
 		dest: OUT_DIR + 'built/assets'
 	},
@@ -86,10 +89,10 @@ gulp.task('scripts', ['lint-scripts'], function() {
 		.pipe(gulp.dest(PATHS.scripts.dest))
 		.pipe(sourcemaps.init())
 		.pipe(babel({presets: ['env']}))
-		.pipe(iife({
+		.pipe(gulpif(! argv.test, iife({
 			useStrict: false,
 			prependSemicolon: false
-		}))
+		})))
 		.pipe(uglifyJS())
 		.pipe(rename({suffix: '.min'}))
 		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)}))
