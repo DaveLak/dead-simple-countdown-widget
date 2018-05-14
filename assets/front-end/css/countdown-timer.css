@@ -37,43 +37,43 @@
 }
 
 /* Light Theme */
-.dscw-countdown-theme-light {
+.dscw-countdown-theme-simple-blue-white {
 	color: #086788;
 }
 
-.dscw-countdown-theme-light .dscw-countdown-theme-inner {
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner {
 	background-color: #fafafa;
 	border: solid 3px #06aed5;
 }
 
-.dscw-countdown-theme-light .dscw-countdown-timer-box {
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-timer-box {
 	border-bottom: 1px solid;
 	border-color: #06aed5;
 	border-top: 1px solid;
 	padding: 4px 0;
 }
 
-.dscw-countdown-theme-light .dscw-countdown-expired-text {
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-expired-text {
 	color: #dd1c1a;
 }
 
 /* Dark Theme */
-.dscw-countdown-theme-dark {
+.dscw-countdown-theme-simple-black-white {
 	color: #fafafa;
 }
 
-.dscw-countdown-theme-dark .dscw-countdown-theme-inner {
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner {
 	background-color: #0c0c0c;
 	border: solid 3px #fafafa;
 }
 
-.dscw-countdown-theme-dark .dscw-countdown-timer-box {
+.dscw-countdown-theme-simple-black-white .dscw-countdown-timer-box {
 	border-bottom: 1px solid;
 	border-color: #fafafa;
 	border-top: 1px solid;
 	padding: 4px 0;
 }
 
-.dscw-countdown-theme-dark .dscw-countdown-expired-text {
+.dscw-countdown-theme-simple-black-white .dscw-countdown-expired-text {
 	color: #dd1c1a;
 }
