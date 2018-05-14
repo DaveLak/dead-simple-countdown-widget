@@ -82,6 +82,18 @@ var CountDownTimer = ( function() {
 	 *  Prototype Methods  *
 	 ***********************/
 
+	/**
+	 * Validates `settings.$mountNode`.
+	 *
+	 * Makes sure `settings.$mountNode` A jQuery object representing a single DOM node.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param {string} $mountNode - jQuery object representing the single DOM node to add the timer to.
+	 *
+	 * @throws {Error} - Passed argument must be a jQuery object wrapping a single element.
+	 * @return {jQuery} - Valid jQuery object representing the DOM node the timer is added to.
+	 */
 	CountDownTimer.prototype.validateMountNode = function( $mountNode ) {
 		if ( $mountNode instanceof jQuery && 1 === $mountNode.length ) {
 			return $mountNode;
@@ -90,18 +102,16 @@ var CountDownTimer = ( function() {
 	};
 
 	/**
-	 * Validates input to make sure
+	 * Validates `settings.instanceID`.
 	 *
-	 * Renders the countdown widget to the DOM and starts the countdown.
+	 * Makes sure `settings.instanceID` is a string with a length greater than 0.
 	 *
 	 * @since 2.0.0
 	 *
-	 * @see CountDownTimer.render
-	 * @see CountDownTimer.calculateRemaining
-	 * @see CountDownTimer.numberTransition
-	 * @see CountDownTimer.showRemainingTime
+	 * @param {string} instanceID - Identifier for this widget instance.
 	 *
-	 * @return {number} `intervalID` of the timer or `0` if the timer already expired.
+	 * @throws {Error} - Passed argument must be a string with a length greater than 0.
+	 * @return {string} - `instanceID` of the timer or `0` if the timer already expired.
 	 */
 	CountDownTimer.prototype.validateInstanceID = function( instanceID ) {
 		if ( ( 'string' === typeof instanceID || instanceID instanceof String ) && 0 < instanceID.length ) {
