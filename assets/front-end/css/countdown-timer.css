@@ -15,13 +15,16 @@
 	margin: 0.8em auto;
 }
 
+.dscw-countdown-instance ul {
+	list-style: none;
+}
+
 .dscw-countdown-timer-box-container {
 	border-radius: 3px;
 }
 
 .dscw-countdown-timer-box {
 	font-weight: 600;
-	margin: 15px auto;
 }
 
 .dscw-countdown-timer-box .dscw-countdown-timer-box-items {
@@ -37,8 +40,16 @@
 }
 
 /* Light Theme */
-.dscw-countdown-theme-simple-blue-white {
+
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h1,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h2,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h3,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h4,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner p,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner li {
 	color: #086788;
+	font-weight: 600;
+	border: none;
 }
 
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner {
@@ -47,10 +58,12 @@
 }
 
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-timer-box {
-	border-bottom: 1px solid;
-	border-color: #06aed5;
-	border-top: 1px solid;
+	border-bottom: 1px solid #06aed5;
+	border-top: 1px solid #06aed5;
+	border-left: none;
+	border-right: none;
 	padding: 4px 0;
+	margin: 5px auto 10px auto;
 }
 
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-expired-text {
@@ -58,20 +71,32 @@
 }
 
 /* Dark Theme */
-.dscw-countdown-theme-simple-black-white {
+
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h1,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h2,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h3,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h4,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner p,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner li {
 	color: #fafafa;
+	font-weight: 600;
+	border: none;
+
 }
 
 .dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner {
+	color: #fafafa;
 	background-color: #0c0c0c;
 	border: solid 3px #fafafa;
 }
 
 .dscw-countdown-theme-simple-black-white .dscw-countdown-timer-box {
-	border-bottom: 1px solid;
-	border-color: #fafafa;
-	border-top: 1px solid;
+	border-bottom: 1px solid #fafafa;
+	border-top: 1px solid #fafafa;
+	border-left: none;
+	border-right: none;
 	padding: 4px 0;
+	margin: 5px auto 10px auto;
 }
 
 .dscw-countdown-theme-simple-black-white .dscw-countdown-expired-text {
