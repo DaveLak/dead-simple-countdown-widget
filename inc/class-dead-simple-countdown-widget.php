@@ -48,9 +48,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			 *
 			 * @since 2.0.0
 			 *
-			 * @param string 'light' Default theme key.
+			 * @param string 'dscw-simple-blue-white' Default theme key.
 			 */
-			$default_theme = apply_filters( 'dscw_default_widget_theme', 'light' );
+			$default_theme = apply_filters( 'dscw_default_widget_theme', 'dscw-simple-blue-white' );
 
 			$active_theme = ! empty( $instance['theme'] ) ? $instance['theme'] : $default_theme;
 
@@ -60,9 +60,9 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 			$expired_text = ! empty( $instance['expired_text'] ) ? $instance['expired_text'] : '';
 
 			$available_themes = array(
-				'light' => 'Light',
-				'dark'  => 'Dark',
-				'none'  => 'None',
+				'dscw-simple-blue-white'  => 'Simple Blue/White',
+				'dscw-simple-black-white' => 'Simple Black/White',
+				'none'                    => 'None',
 			);
 
 			/**
@@ -199,11 +199,11 @@ if ( ! class_exists( 'Dead_Simple_CountDown_Widget' ) ) {
 
 			// Check if we are using a theme and set the CSS class accordingly.
 			switch ( $instance['theme'] ) {
-				case 'light':
-					$container_class = 'dscw-countdown-theme-light ';
+				case 'dscw-simple-blue-white':
+					$container_class = 'dscw-countdown-theme-simple-blue-white ';
 					break;
-				case 'dark':
-					$container_class = 'dscw-countdown-theme-dark ';
+				case 'dscw-simple-black-white':
+					$container_class = 'dscw-countdown-theme-simple-black-white ';
 					break;
 				default:
 					$container_class = '';

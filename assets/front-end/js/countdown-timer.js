@@ -223,11 +223,19 @@ var CountDownTimer = ( function() {
 		// Check if there is still time left before the countdown expires
 		if ( 0 < this.calculateRemaining() ) {
 
-			// Update the displayed numbers
-			this.$numberDays.text( this.remaining.days );
-			this.$numberHours.text( this.remaining.hours );
-			this.$numberMinutes.text( this.remaining.minutes );
-			this.$numberSeconds.text( this.remaining.seconds );
+			// Update the displayed numbers if they changed
+			if ( this.remaining.days !== Number( this.$numberDays.text() ) ) {
+				this.$numberDays.text( this.remaining.days );
+			}
+			if ( this.remaining.hours !== Number( this.$numberHours.text() ) ) {
+				this.$numberHours.text( this.remaining.hours );
+			}
+			if ( this.remaining.minutes !== Number( this.$numberMinutes.text() ) ) {
+				this.$numberMinutes.text( this.remaining.minutes );
+			}
+			if ( this.remaining.seconds !== Number( this.$numberSeconds.text() ) ) {
+				this.$numberSeconds.text( this.remaining.seconds );
+			}
 		}
 	};
 
