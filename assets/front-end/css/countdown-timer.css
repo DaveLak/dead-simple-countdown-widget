@@ -1,3 +1,9 @@
+.dscw-countdown-widget {
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .dscw-countdown-instance {
 	border-radius: 2px;
 	font-size: 16px;
