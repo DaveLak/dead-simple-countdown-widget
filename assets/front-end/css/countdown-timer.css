@@ -40,10 +40,15 @@
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h1,
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h2,
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h3,
-.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h4,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h4 {
+	color: #0093b6;
+	font-weight: 600;
+	border: none;
+}
+
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner p,
 .dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner li {
-	color: #086788;
+	color: #2b93b7;
 	font-weight: 600;
 	border: none;
 }
@@ -62,7 +67,7 @@
 	margin: 5px auto 10px auto;
 }
 
-.dscw-countdown-theme-simple-blue-white .dscw-countdown-expired-text {
+.dscw-countdown-theme-simple-blue-white h4.dscw-countdown-expired-text {
 	color: #dd1c1a;
 }
 
@@ -95,6 +100,6 @@
 	margin: 5px auto 10px auto;
 }
 
-.dscw-countdown-theme-simple-black-white .dscw-countdown-expired-text {
+.dscw-countdown-theme-simple-black-white h4.dscw-countdown-expired-text {
 	color: #dd1c1a;
 }
