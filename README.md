@@ -9,7 +9,10 @@ as support for adding your own via action and filter hooks.
 * Two built in color schemes (themes) configurable per widget
   * Black & White
   * Blue & White
-* Countdown support titles and expiration text
+* Optionally apply no color scheme
+* Custom titles and expiration text
+* Numbers animate from zero to remaining time on load
+* Mobile friendly
 * Action and Filter hooks for adding additional themes and styles
 * WordPress Coding Standards compliant
 
@@ -36,6 +39,7 @@ A non-exhaustive list of features being considered includes:
 * Ability to add select custom styles with a color-picker
 * Exposed JavaScript API
 * Additional Actions & Filters
+* Count-up
 
 Have something you'd like to see added? [Open an issues](https://github.com/DaveLak/dead-simple-countdown-widget/issues/new)!
 
