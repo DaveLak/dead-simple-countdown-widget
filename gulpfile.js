@@ -61,7 +61,10 @@ var PATHS = {
 		dest: OUT_DIR + 'built/assets'
 	},
 	php: {
-		src: './**/**/*.php',
+		src: [
+			'./**/**/*.php',
+			'!./vendor/**/'
+		],
 		dest: OUT_DIR
 	}
 };
