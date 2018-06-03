@@ -37,7 +37,10 @@ var PLUGIN_NAME = 'dead-simple-countdown-widget';
 // Name of the directory to write the release files and bundle to.
 var RELEASE_DIR = './release';
 
-// Directory where files get written to.
+/* Directory where files get written to. Will be the current directory
+ * unless the `--release` argument is passed on the command line,
+ * in that case `./RELEASE_DIR/PLUGIN_NAME/` is used.
+ */
 var OUT_DIR = argv.release ? RELEASE_DIR + '/' + PLUGIN_NAME + '/' : './';
 
 // Read/Write paths of files.
@@ -61,7 +64,10 @@ var PATHS = {
 		dest: OUT_DIR + 'built/assets'
 	},
 	php: {
-		src: './**/**/*.php',
+		src: [
+			'./**/**/*.php',
+			'!./vendor/**/'
+		],
 		dest: OUT_DIR
 	}
 };
@@ -80,6 +86,8 @@ gulp.task('clean', function() {
 	]);
 });
 
+// Builds minified JavaScript wrapping all files in an IIFE.
+// Note: Babel is used here only for safeties sake, the plugin is written in ES5.
 gulp.task('scripts', ['lint-scripts'], function() {
 	return gulp.src(PATHS.scripts.src)
 		.pipe(changed(PATHS.scripts.dest))
@@ -92,10 +100,11 @@ gulp.task('scripts', ['lint-scripts'], function() {
 		}))
 		.pipe(uglifyJS())
 		.pipe(rename({suffix: '.min'}))
-		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)}))
+		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)})) // Only write souremaps in development
 		.pipe(gulp.dest(PATHS.scripts.dest));
 });
 
+// Builds minified and prefixed CSS.
 gulp.task('styles', ['lint-css'], function() {
 	var plugins = [
 		autoprefixer(),
@@ -107,10 +116,11 @@ gulp.task('styles', ['lint-css'], function() {
 		.pipe(sourcemaps.init())
 		.pipe(postcss(plugins))
 		.pipe(rename({suffix: '.min'}))
-		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)}))
+		.pipe(sourcemaps.write({addComment: (false === isProductionBuild)})) // Only write souremaps in development
 		.pipe(gulp.dest(PATHS.styles.dest));
 });
 
+// Copies files to build dir, minifying only in production builds.
 gulp.task('images', function() {
 	return gulp.src(PATHS.images.src)
 		.pipe(changed(PATHS.images.dest))
@@ -118,6 +128,7 @@ gulp.task('images', function() {
 		.pipe(gulp.dest(PATHS.images.dest));
 });
 
+// Copies files to build dir.
 gulp.task('php', function() {
 	return gulp.src(PATHS.php.src)
 		.pipe(changed(PATHS.php.dest))
@@ -127,6 +138,8 @@ gulp.task('php', function() {
 /*********************
  *  Watch
  * *******************/
+
+// Watch JS, CSS & images for changes in development, running relevant tasks on change.
 gulp.task('watch', ['assets'], function() {
 	var scriptWatcher = gulp.watch(PATHS.scripts.src, ['scripts']);
 	var styleWatcher = gulp.watch(PATHS.styles.src, ['styles']);
@@ -155,8 +168,14 @@ gulp.task('watch', ['assets'], function() {
 /************************
  *    Linting
  *************************/
+
+// runs all lint tasks.
 gulp.task('lint', ['lint-scripts', 'lint-css']);
 
+/* Lint JavaScript files, failing with non 0 exit code if `--strict` or production flags
+* are passed while running the command. Passing `--fix` on the command line will
+* attempt to fix any errors.
+*/
 gulp.task('lint-scripts', function() {
 	return gulp.src(PATHS.scripts.src.concat(['!node_modules/**']))
 		.pipe(eslint({
@@ -168,6 +187,10 @@ gulp.task('lint-scripts', function() {
 		.pipe(gulpif(argv.fix, gulp.dest('./assets')));
 });
 
+/* Lint CSS files, failing with non 0 exit code if `--strict` or production flags
+* are passed while running the command. Passing `--fix` on the command line will
+* attempt to fix any errors.
+*/
 gulp.task('lint-css', function() {
 	return gulp.src(PATHS.styles.src.concat(['!**/jquery-ui-*']))
 		.pipe(stylelint({
@@ -191,6 +214,7 @@ gulp.task('package', ['assets', 'php'], function() {
 		.pipe(gulp.dest(RELEASE_DIR));
 });
 
+// Runs all asset related tasks.
 gulp.task('assets', ['images', 'styles', 'scripts']);
 
 gulp.task('build', ['assets']);
@@ -199,6 +223,8 @@ gulp.task('default', ['assets']);
 /****************
  *    Utils     *
  ****************/
+
+// Helper function for styling watch task terminal output.
 function styleEventText(eventType) {
 	switch (eventType) {
 		case 'added':
@@ -210,6 +236,7 @@ function styleEventText(eventType) {
 	}
 }
 
+// Helper function printing errors and failing with non 0 exit code. Mostly for CI.
 function handleError(err) {
 	console.log(err.toString());
 	process.exit(1);
