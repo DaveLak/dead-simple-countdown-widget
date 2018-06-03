@@ -1,7 +1,7 @@
 # 2.0.0
 
 Version 2 is a major release. Please be sure to test this version in a development
-or staging enviorment and take a backup before upgrading.
+or staging environment and take a backup before upgrading.
 
 ### New:
 * There is now an option to set a minimal theme that styles the widget. Only two basic themes are included for now, a light theme and a dark theme.
