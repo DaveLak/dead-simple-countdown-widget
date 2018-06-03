@@ -32,7 +32,7 @@ as support for adding your own via action and filter hooks.
 
 ### Installation:
 
-This plugin is curently only availible from this repo. Only manual instalation
+This plugin is currently only available from this repo. Only manual installation
 is possible at this time. Publishing to Wordpress.org is planed for the near 
 future however so check back if you require installation from the wp-admin.
 
