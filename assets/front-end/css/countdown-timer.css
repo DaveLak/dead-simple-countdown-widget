@@ -1,13 +1,111 @@
-.dscw-countdown-timer-box-wrapper {
-    border-radius: 3px;
+.dscw-countdown-widget {
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.dscw-countdown-timer-box {
-    text-align: center;
-    font-weight: bold;
+.dscw-countdown-instance {
+	border-radius: 2px;
+	font-size: 16px;
+	padding: 2px;
+	text-align: center;
 }
 
-.dscw-countdown-timer-box-items {
-    display: inline-block;
-    margin: 5px;
+.dscw-countdown-instance h3 {
+	font-size: 1.4em;
+	margin: 0;
+}
+
+.dscw-countdown-instance h4 {
+	font-size: 1.2em;
+	margin: 0.8em auto;
+}
+
+.dscw-countdown-instance ul {
+	list-style: none;
+}
+
+.dscw-countdown-timer-box-container {
+	border-radius: 3px;
+}
+
+.dscw-countdown-timer-box .dscw-countdown-timer-box-items {
+	display: inline-block;
+	margin: 5px;
+	padding-bottom: 0;
+}
+
+/* ============ Themes ============ */
+.dscw-countdown-theme-inner {
+	padding: 10px 7px 0 7px;
+	border-radius: 5px;
+}
+
+/* Light Theme */
+
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h1,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h2,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h3,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner h4 {
+	color: #0093b6;
+	font-weight: 600;
+	border: none;
+}
+
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner p,
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner li {
+	color: #2b93b7;
+	font-weight: 600;
+	border: none;
+}
+
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-theme-inner {
+	background-color: #fafafa;
+	border: solid 3px #06aed5;
+}
+
+.dscw-countdown-theme-simple-blue-white .dscw-countdown-timer-box {
+	border-bottom: 1px solid #06aed5;
+	border-top: 1px solid #06aed5;
+	border-left: none;
+	border-right: none;
+	padding: 4px 0;
+	margin: 5px auto 10px auto;
+}
+
+.dscw-countdown-theme-simple-blue-white h4.dscw-countdown-expired-text {
+	color: #dd1c1a;
+}
+
+/* Dark Theme */
+
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h1,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h2,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h3,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner h4,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner p,
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner li {
+	color: #fafafa;
+	font-weight: 600;
+	border: none;
+
+}
+
+.dscw-countdown-theme-simple-black-white .dscw-countdown-theme-inner {
+	color: #fafafa;
+	background-color: #0c0c0c;
+	border: solid 3px #fafafa;
+}
+
+.dscw-countdown-theme-simple-black-white .dscw-countdown-timer-box {
+	border-bottom: 1px solid #fafafa;
+	border-top: 1px solid #fafafa;
+	border-left: none;
+	border-right: none;
+	padding: 4px 0;
+	margin: 5px auto 10px auto;
+}
+
+.dscw-countdown-theme-simple-black-white h4.dscw-countdown-expired-text {
+	color: #dd1c1a;
 }

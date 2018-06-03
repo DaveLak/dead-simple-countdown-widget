@@ -16,3 +16,20 @@ tags
 
 # PhpStorm
 .idea/
+
+# Node
+node_modules/
+
+# Composer
+vendor/
+
+# Builds
+built/
+release/
+dead-simple-countdown-widget.zip
+
+# Debug
+*.log
+
+# Misc.
+.directory

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards">
+	<description>A dead simple and extendable countdown widget for WordPress.</description>
+
+	<!-- Start linting from project root.-->
+	<file>./</file>
+
+	<!-- Exclude empty index.php files. -->
+	<exclude-pattern>*/index.php</exclude-pattern>
+
+	<!-- Exclude the Composer Vendor directory. -->
+	<exclude-pattern>/vendor/*</exclude-pattern>
+
+	<!-- Exclude the Node Modules directory. -->
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+
+	<!-- Exclude development only files and directories. -->
+	<exclude-pattern>gulpfile.js</exclude-pattern>
+	<exclude-pattern>/built/</exclude-pattern>
+	<exclude-pattern>/assets/</exclude-pattern>
+
+	<!-- Exclude jquery ui themes. -->
+	<exclude-pattern>jquery-ui*</exclude-pattern>
+
+
+	<!-- Include the WordPress standard. -->
+	<rule ref="WordPress">
+		<!-- Don't worry about precision alignment -->
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment"/>
+	</rule>
+
+	<!-- Add in some extra rules from other standards. -->
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+	<rule ref="Generic.Commenting.Todo"/>
+
+	<!-- Check for PHP cross-version compatibility. -->
+	<config name="testVersion" value="5.2-7.2"/>
+	<rule ref="PHPCompatibility"/>
+
+	<config name="minimum_supported_wp_version" value="4.6"/>
+
+	<!--<rule ref="WordPress.WP.I18n">-->
+		<!--<properties>-->
+			<!--<property name="text_domain" type="array" value="my-textdomain,library-textdomain"/>-->
+		<!--</properties>-->
+	<!--</rule>-->
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array" value="dscw, Dead_Simple_CountDown_Widget"/>
+		</properties>
+	</rule>
+
+</ruleset>
