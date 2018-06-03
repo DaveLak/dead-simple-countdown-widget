@@ -30,3 +30,6 @@ dead-simple-countdown-widget.zip
 
 # Debug
 *.log
+
+# Misc.
+.directory
